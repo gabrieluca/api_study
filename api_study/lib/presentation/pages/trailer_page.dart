@@ -1,7 +1,9 @@
+import 'package:api_study/controllers/trailer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 import 'dart:async';
+import 'package:get/get.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen(this.movieId, {Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // offers several different constructors to play videos from assets, files,
     // or the internet.
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+      'https://www.youtube.com/watch?v=6JnN1DmbqoU',
     );
 
     // Initialize the controller and store the Future for later use.
@@ -43,6 +45,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final _controller = Get.put(TrailerController(widget.movieId));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Butterfly Video'),
