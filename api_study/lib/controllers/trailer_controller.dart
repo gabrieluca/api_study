@@ -1,6 +1,6 @@
 import 'package:api_study/data/repository.dart';
 import 'package:api_study/domain/movie_video.dart';
-import 'package:getxfire/getxfire.dart';
+import 'package:get/get.dart';
 
 class TrailerController extends GetxController with StateMixin {
   TrailerController(
@@ -12,7 +12,7 @@ class TrailerController extends GetxController with StateMixin {
   final videoUrl = Rxn<String>();
   final videoModel = Rxn<MovieVideo>();
 
-  String get trailerUrl => videoModel.value!.results.first.key;
+  String? get trailerUrl => videoModel.value?.results.first.key;
 
   @override
   void onInit() {
@@ -27,7 +27,6 @@ class TrailerController extends GetxController with StateMixin {
     result.fold(
       (error) {
         change(null, status: RxStatus.error());
-        print(error.toString());
       },
       (videoResponse) {
         change(null, status: RxStatus.success());

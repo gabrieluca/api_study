@@ -15,21 +15,24 @@ class TrailerPage extends StatelessWidget {
 
     return Obx(
       () {
-        return _controller.obx(
-          (state) {
-            return TrailerPlayer(movieId);
-          },
-          onLoading: const Center(child: CircularProgressIndicator.adaptive()),
-          onError: (error) => Text(error.toString()),
-        );
+        if (_controller.trailerUrl != null) {
+          return _controller.obx(
+            (state) => TrailerPlayer(_controller.trailerUrl!),
+            onLoading:
+                const Center(child: CircularProgressIndicator.adaptive()),
+            onError: (error) => Text(error.toString()),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        }
       },
     );
   }
 }
 
 class TrailerPlayer extends StatefulWidget {
-  const TrailerPlayer(this.movieId, {Key? key}) : super(key: key);
-  final int movieId;
+  const TrailerPlayer(this.trailerUrl, {Key? key}) : super(key: key);
+  final String trailerUrl;
 
   @override
   _TrailerPlayerState createState() => _TrailerPlayerState();
@@ -42,7 +45,7 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
   @override
   void initState() {
     _controller = VideoPlayerController.network(
-      'https://www.youtube.com/watch?v=$widget.movieId',
+      'https://www.youtube.com/watch?v=${widget.trailerUrl}',
     );
 
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -61,19 +64,14 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    // final _controller = Get.put(TrailerController(widget.movieId));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Butterfly Video'),
+        title: const Text('Trailer'),
       ),
-      // Use a FutureBuilder to display a loading spinner while waiting for the
-      // VideoPlayerController to finish initializing.
       body: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // If the VideoPlayerController has finished initialization, use
-            // the data it provides to limit the aspect ratio of the video.
             return AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
               // Use the VideoPlayer widget to display the video.
