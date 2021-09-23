@@ -1,9 +1,8 @@
 import 'package:api_study/controllers/trailer_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'package:get/get.dart';
 
-import 'dart:async';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class TrailerPage extends StatelessWidget {
   const TrailerPage(this.movieId, {Key? key}) : super(key: key);
@@ -30,80 +29,43 @@ class TrailerPage extends StatelessWidget {
   }
 }
 
-class TrailerPlayer extends StatefulWidget {
+class TrailerPlayer extends StatelessWidget {
   const TrailerPlayer(this.trailerUrl, {Key? key}) : super(key: key);
   final String trailerUrl;
 
   @override
-  _TrailerPlayerState createState() => _TrailerPlayerState();
-}
-
-class _TrailerPlayerState extends State<TrailerPlayer> {
-  late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
-
-  @override
-  void initState() {
-    _controller = VideoPlayerController.network(
-      'https://www.youtube.com/watch?v=${widget.trailerUrl}',
-    );
-
-    _initializeVideoPlayerFuture = _controller.initialize();
-
-    _controller.setLooping(true);
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    //TODO Fix to start the video
+    final YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: trailerUrl,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: true,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.maybePop(context);
+            _controller.dispose();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         title: const Text('Trailer'),
       ),
-      body: FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              // Use the VideoPlayer widget to display the video.
-              child: VideoPlayer(_controller),
-            );
-          } else {
-            // If the VideoPlayerController is still initializing, show a
-            // loading spinner.
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Wrap the play or pause in a call to `setState`. This ensures the
-          // correct icon is shown.
-          setState(() {
-            // If the video is playing, pause it.
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-            } else {
-              // If the video is paused, play it.
-              _controller.play();
-            }
-          });
-        },
-        // Display the correct icon depending on the state of the player.
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+      body: YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Colors.amber,
+        progressColors: const ProgressBarColors(
+          playedColor: Colors.amber,
+          handleColor: Colors.amberAccent,
         ),
+        bottomActions: [
+          PlayPauseButton(),
+        ],
+        onEnded: (data) => data.toString(),
       ),
     );
   }
