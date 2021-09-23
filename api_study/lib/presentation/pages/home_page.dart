@@ -59,12 +59,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildMovieGrid(),
+      body: RefreshIndicator(
+        color: Colors.purple,
+        onRefresh: () => _initialize(),
+        child: _buildMovieGrid(),
+      ),
     );
   }
 
   _buildAppBar() {
     return AppBar(
+      backgroundColor: Colors.purple,
       title: const Text(kAppName),
       actions: [
         IconButton(
