@@ -1,60 +1,59 @@
-import 'package:api_study/domain/video_model.dart';
+import 'package:api_study/core/constants.dart';
+import 'package:api_study/domain/movie_video.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:api_study/domain/movie_error.dart';
-
-import '../core/api_.dart';
-import '../domain/movie_detail_model.dart';
+import 'package:api_study/domain/failure.dart';
+import '../domain/movie_detail.dart';
 import '../domain/movie_response_model.dart';
 
 class Repository {
   final Dio _dio = Dio(kDioOptions);
 
-  Future<Either<MovieError, MovieResponseModel>> getAllMovies(int page) async {
+  Future<Either<IFailure, MovieResponseModel>> getAllMovies(int page) async {
     try {
       final response = await _dio.get('/movie/popular?page=$page');
       final model = MovieResponseModel.fromMap(response.data);
       return Right(model);
     } on DioError catch (error) {
       if (error.response != null) {
-        return Left(RepositoryError(error.response!.data['status_message']));
+        return Left(Failure(error.response!.data['status_message']));
       } else {
-        return Left(RepositoryError(kServerError));
+        return Left(Failure(kServerError));
       }
     } on Exception catch (error) {
-      return Left(RepositoryError(error.toString()));
+      return Left(Failure(error.toString()));
     }
   }
 
-  Future<Either<MovieError, MovieDetailModel>> getMovie(int id) async {
+  Future<Either<IFailure, MovieDetail>> getMovie(int id) async {
     try {
       final response = await _dio.get('/movie/$id');
-      final model = MovieDetailModel.fromMap(response.data);
+      final model = MovieDetail.fromMap(response.data);
       return Right(model);
     } on DioError catch (error) {
       if (error.response != null) {
-        return Left(RepositoryError(error.response?.data['status_message']));
+        return Left(Failure(error.response?.data['status_message']));
       } else {
-        return Left(RepositoryError(kServerError));
+        return Left(Failure(kServerError));
       }
     } on Exception catch (error) {
-      return Left(RepositoryError(error.toString()));
+      return Left(Failure(error.toString()));
     }
   }
 
-  Future<Either<MovieError, Video>> getTrailer(int id) async {
+  Future<Either<IFailure, MovieVideo>> getTrailer(int id) async {
     try {
       final response = await _dio.get('/movie/$id/videos');
-      final model = Video.fromMap(response.data);
+      final model = MovieVideo.fromMap(response.data);
       return Right(model);
     } on DioError catch (error) {
       if (error.response != null) {
-        return Left(RepositoryError(error.response?.data['status_message']));
+        return Left(Failure(error.response?.data['status_message']));
       } else {
-        return Left(RepositoryError(kServerError));
+        return Left(Failure(kServerError));
       }
     } on Exception catch (error) {
-      return Left(RepositoryError(error.toString()));
+      return Left(Failure(error.toString()));
     }
   }
 }

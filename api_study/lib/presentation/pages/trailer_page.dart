@@ -1,35 +1,52 @@
 import 'package:api_study/controllers/trailer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-
-import 'dart:async';
 import 'package:get/get.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen(this.movieId, {Key? key}) : super(key: key);
+import 'dart:async';
+
+class TrailerPage extends StatelessWidget {
+  const TrailerPage(this.movieId, {Key? key}) : super(key: key);
   final int movieId;
 
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  Widget build(BuildContext context) {
+    final _controller = Get.put(TrailerController(movieId));
+
+    return Obx(
+      () {
+        return _controller.obx(
+          (state) {
+            return TrailerPlayer(movieId);
+          },
+          onLoading: const Center(child: CircularProgressIndicator.adaptive()),
+          onError: (error) => Text(error.toString()),
+        );
+      },
+    );
+  }
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class TrailerPlayer extends StatefulWidget {
+  const TrailerPlayer(this.movieId, {Key? key}) : super(key: key);
+  final int movieId;
+
+  @override
+  _TrailerPlayerState createState() => _TrailerPlayerState();
+}
+
+class _TrailerPlayerState extends State<TrailerPlayer> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
   @override
   void initState() {
-    // Create and store the VideoPlayerController. The VideoPlayerController
-    // offers several different constructors to play videos from assets, files,
-    // or the internet.
     _controller = VideoPlayerController.network(
-      'https://www.youtube.com/watch?v=6JnN1DmbqoU',
+      'https://www.youtube.com/watch?v=$widget.movieId',
     );
 
-    // Initialize the controller and store the Future for later use.
     _initializeVideoPlayerFuture = _controller.initialize();
 
-    // Use the controller to loop the video.
     _controller.setLooping(true);
 
     super.initState();
@@ -37,7 +54,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
     _controller.dispose();
 
     super.dispose();

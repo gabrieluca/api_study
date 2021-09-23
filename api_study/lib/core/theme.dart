@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final kThemeApp = ThemeData(
+final kThemeData = ThemeData(
   brightness: Brightness.dark,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   primarySwatch: Colors.red,

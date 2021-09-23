@@ -7,18 +7,18 @@ import '../widgets/centered_message.dart';
 import '../widgets/centered_progress.dart';
 import '../widgets/movie_card.dart';
 
-class MoviePage extends StatefulWidget {
-  const MoviePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   //TODO Search for title method
   //TODO Refresh page
   //TODO Scroll Pagination
 
   @override
-  _MoviePageState createState() => _MoviePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MoviePageState extends State<MoviePage> {
+class _HomePageState extends State<HomePage> {
   final _controller = MovieController();
   final _scrollController = ScrollController();
   int lastPage = 1;
@@ -77,7 +77,7 @@ class _MoviePageState extends State<MoviePage> {
 
   _buildMovieGrid() {
     if (_controller.loading) {
-      return CenteredProgress();
+      return const CenteredProgress();
     }
 
     if (_controller.movieError != null) {
@@ -110,7 +110,7 @@ class _MoviePageState extends State<MoviePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MovieDetailPage(movieId),
+        builder: (context) => DetailPage(movieId),
       ),
     );
   }

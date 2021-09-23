@@ -8,16 +8,16 @@ import '../widgets/chip_date.dart';
 import '../widgets/rate.dart';
 import 'trailer_page.dart';
 
-class MovieDetailPage extends StatefulWidget {
+class DetailPage extends StatefulWidget {
   final int movieId;
 
-  const MovieDetailPage(this.movieId, {Key? key}) : super(key: key);
+  const DetailPage(this.movieId, {Key? key}) : super(key: key);
 
   @override
-  _MovieDetailPageState createState() => _MovieDetailPageState();
+  _DetailPageState createState() => _DetailPageState();
 }
 
-class _MovieDetailPageState extends State<MovieDetailPage> {
+class _DetailPageState extends State<DetailPage> {
   final _controller = MovieDetailController();
 
   @override
@@ -54,7 +54,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   _buildMovieDetail() {
     if (_controller.loading) {
-      return CenteredProgress();
+      return const CenteredProgress();
     }
 
     if (_controller.movieError != null) {
@@ -92,7 +92,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => VideoPlayerScreen(widget.movieId),
+                builder: (context) => TrailerPage(widget.movieId),
               ),
             ),
             icon: const Icon(Icons.ondemand_video),

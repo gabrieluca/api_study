@@ -1,5 +1,5 @@
 import 'package:api_study/data/repository.dart';
-import 'package:api_study/domain/video_model.dart';
+import 'package:api_study/domain/movie_video.dart';
 import 'package:getxfire/getxfire.dart';
 
 class TrailerController extends GetxController with StateMixin {
@@ -10,7 +10,7 @@ class TrailerController extends GetxController with StateMixin {
   final _repository = Repository();
 
   final videoUrl = Rxn<String>();
-  final videoModel = Rxn<Video>();
+  final videoModel = Rxn<MovieVideo>();
 
   String get trailerUrl => videoModel.value!.results.first.key;
 
@@ -25,8 +25,14 @@ class TrailerController extends GetxController with StateMixin {
   Future<void> getTrailer(int id) async {
     final result = await _repository.getTrailer(id);
     result.fold(
-      (error) => print(error.toString()),
-      (videoResponse) => videoModel.value = videoResponse,
+      (error) {
+        change(null, status: RxStatus.error());
+        print(error.toString());
+      },
+      (videoResponse) {
+        change(null, status: RxStatus.success());
+        videoModel.value = videoResponse;
+      },
     );
     change(null, status: RxStatus.success());
   }

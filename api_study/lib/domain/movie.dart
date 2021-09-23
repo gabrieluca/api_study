@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class MovieModel {
+class Movie {
   final double popularity;
   final int voteCount;
   final bool video;
@@ -16,7 +16,7 @@ class MovieModel {
   final String overview;
   final DateTime releaseDate;
 
-  const MovieModel({
+  const Movie({
     required this.popularity,
     required this.voteCount,
     required this.video,
@@ -33,10 +33,9 @@ class MovieModel {
     required this.releaseDate,
   });
 
-  factory MovieModel.fromJson(String str) =>
-      MovieModel.fromMap(json.decode(str));
+  factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
-  factory MovieModel.fromMap(Map<String, dynamic> json) => MovieModel(
+  factory Movie.fromMap(Map<String, dynamic> json) => Movie(
         popularity: json["popularity"].toDouble(),
         voteCount: json["vote_count"],
         video: json["video"],

@@ -1,24 +1,24 @@
 import 'package:api_study/data/repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:api_study/domain/movie_error.dart';
+import 'package:api_study/domain/failure.dart';
 
-import '../domain/movie_model.dart';
+import '../domain/movie.dart';
 import '../domain/movie_response_model.dart';
 
 class MovieController {
   final _repository = Repository();
 
   MovieResponseModel? movieResponseModel;
-  MovieError? movieError;
+  IFailure? movieError;
   bool loading = true;
 
-  List<MovieModel> get movies => movieResponseModel?.movies ?? <MovieModel>[];
+  List<Movie> get movies => movieResponseModel?.movies ?? <Movie>[];
   int get moviesCount => movies.length;
   bool get hasMovies => moviesCount != 0;
   int get totalPages => movieResponseModel?.totalPages ?? 1;
   int get currentPage => movieResponseModel?.page ?? 1;
 
-  Future<Either<MovieError, MovieResponseModel>> fetchAllMovies(
+  Future<Either<IFailure, MovieResponseModel>> fetchAllMovies(
       {int page = 1}) async {
     movieError = null;
     final result = await _repository.getAllMovies(page);

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'movie_genre.dart';
-import 'production_company_model.dart';
-import 'production_country_model.dart';
-import 'spoken_language_model.dart';
+import 'production_company.dart';
+import 'production_country.dart';
+import 'spoken_language.dart';
 
-class MovieDetailModel {
+class MovieDetail {
   final bool adult;
   final String? backdropPath;
   final dynamic belongsToCollection;
@@ -19,12 +19,12 @@ class MovieDetailModel {
   final String overview;
   final double popularity;
   final String posterPath;
-  final List<ProductionCompanyModel> productionCompanies;
-  final List<ProductionCountryModel> productionCountries;
+  final List<ProductionCompany> productionCompanies;
+  final List<ProductionCountry> productionCountries;
   final DateTime releaseDate;
   final int revenue;
   final int runtime;
-  final List<SpokenLanguageModel> spokenLanguages;
+  final List<SpokenLanguage> spokenLanguages;
   final String status;
   final String tagline;
   final String title;
@@ -32,7 +32,7 @@ class MovieDetailModel {
   final double voteAverage;
   final int voteCount;
 
-  const MovieDetailModel({
+  const MovieDetail({
     required this.adult,
     required this.backdropPath,
     required this.belongsToCollection,
@@ -60,11 +60,10 @@ class MovieDetailModel {
     required this.voteCount,
   });
 
-  factory MovieDetailModel.fromJson(String str) =>
-      MovieDetailModel.fromMap(json.decode(str));
+  factory MovieDetail.fromJson(String str) =>
+      MovieDetail.fromMap(json.decode(str));
 
-  factory MovieDetailModel.fromMap(Map<String, dynamic> json) =>
-      MovieDetailModel(
+  factory MovieDetail.fromMap(Map<String, dynamic> json) => MovieDetail(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
         belongsToCollection: json["belongs_to_collection"],
@@ -79,17 +78,17 @@ class MovieDetailModel {
         overview: json["overview"],
         popularity: json["popularity"].toDouble(),
         posterPath: json["poster_path"],
-        productionCompanies: List<ProductionCompanyModel>.from(
+        productionCompanies: List<ProductionCompany>.from(
             json["production_companies"]
-                .map((x) => ProductionCompanyModel.fromMap(x))),
-        productionCountries: List<ProductionCountryModel>.from(
+                .map((x) => ProductionCompany.fromMap(x))),
+        productionCountries: List<ProductionCountry>.from(
             json["production_countries"]
-                .map((x) => ProductionCountryModel.fromMap(x))),
+                .map((x) => ProductionCountry.fromMap(x))),
         releaseDate: DateTime.parse(json["release_date"]),
         revenue: json["revenue"],
         runtime: json["runtime"],
-        spokenLanguages: List<SpokenLanguageModel>.from(json["spoken_languages"]
-            .map((x) => SpokenLanguageModel.fromMap(x))),
+        spokenLanguages: List<SpokenLanguage>.from(
+            json["spoken_languages"].map((x) => SpokenLanguage.fromMap(x))),
         status: json["status"],
         tagline: json["tagline"],
         title: json["title"],

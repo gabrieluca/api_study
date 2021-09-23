@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-class Video {
-  Video({
+class MovieVideo {
+  MovieVideo({
     required this.id,
     required this.results,
   });
@@ -13,11 +13,12 @@ class Video {
   final int id;
   final List<Result> results;
 
-  factory Video.fromJson(String str) => Video.fromMap(json.decode(str));
+  factory MovieVideo.fromJson(String str) =>
+      MovieVideo.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Video.fromMap(Map<String, dynamic> json) => Video(
+  factory MovieVideo.fromMap(Map<String, dynamic> json) => MovieVideo(
         id: json["id"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromMap(x))),

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'movie_model.dart';
+import 'movie.dart';
 
 class MovieResponseModel {
   int page;
   final int totalResults;
   final int totalPages;
-  final List<MovieModel> movies;
+  final List<Movie> movies;
 
   MovieResponseModel({
     required this.page,
@@ -23,7 +23,6 @@ class MovieResponseModel {
         page: json["page"],
         totalResults: json["total_results"],
         totalPages: json["total_pages"],
-        movies: List<MovieModel>.from(
-            json["results"].map((x) => MovieModel.fromMap(x))),
+        movies: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),
       );
 }

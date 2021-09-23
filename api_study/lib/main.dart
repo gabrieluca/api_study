@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/constants.dart';
-import 'core/theme_app.dart';
+import 'core/theme.dart';
 import 'presentation/pages/home_page.dart';
 
 void main() {
@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: kAppName,
-      theme: kThemeApp,
-      home: const MoviePage(),
+      theme: kThemeData,
+      home: const HomePage(),
     );
   }
 }
