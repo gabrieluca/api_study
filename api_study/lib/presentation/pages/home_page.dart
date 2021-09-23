@@ -11,7 +11,6 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   //TODO Search for title method
-  //TODO Refresh page
   //TODO Scroll Pagination
 
   @override
@@ -55,6 +54,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  filterByTitle() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,8 +74,8 @@ class _HomePageState extends State<HomePage> {
       title: const Text(kAppName),
       actions: [
         IconButton(
-          icon: const Icon(Icons.refresh),
-          onPressed: _initialize,
+          icon: const Icon(Icons.search),
+          onPressed: filterByTitle(),
         ),
       ],
     );
