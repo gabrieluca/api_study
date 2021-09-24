@@ -9,8 +9,9 @@ import 'trailer_page.dart';
 
 class DetailPage extends StatefulWidget {
   final int movieId;
+  final String posterPath;
 
-  const DetailPage(this.movieId, {Key? key}) : super(key: key);
+  const DetailPage(this.movieId, this.posterPath, {Key? key}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -59,7 +60,7 @@ class _DetailPageState extends State<DetailPage> {
       physics: const BouncingScrollPhysics(),
       slivers: <Widget>[
         SliverAppBar(
-          expandedHeight: 200.0,
+          expandedHeight: 220.0,
           floating: true,
           pinned: true,
           snap: false,
@@ -78,11 +79,14 @@ class _DetailPageState extends State<DetailPage> {
                 fontSize: 16.0,
               ),
             ),
-            background: Image.network(
-              _controller.movieDetail?.backdropPath != null
-                  ? 'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}'
-                  : coverPlaceholder,
-              fit: BoxFit.cover,
+            background: Hero(
+              tag: widget.movieId,
+              child: Image.network(
+                _controller.movieDetail?.backdropPath != null
+                    ? 'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}'
+                    : coverPlaceholder,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -100,17 +104,19 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
+        if (_controller.movieDetail != null)
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 75,
-                      color: Colors.black12,
-                    ),
-                  ),
-              childCount: 10),
-        ),
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 75,
+                  color: Colors.black12,
+                ),
+              ),
+              childCount: 10,
+            ),
+          ),
       ],
     );
   }

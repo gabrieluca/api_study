@@ -122,16 +122,16 @@ class _HomePageState extends State<HomePage> {
   Widget _buildMovieCard(context, index) {
     final movie = _controller.movies[index];
     return MovieCard(
+      movieId: movie.id.toString(),
       posterPath: movie.posterPath,
-      onTap: () => _openDetailPage(movie.id),
-    );
-  }
-
-  _openDetailPage(movieId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DetailPage(movieId),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailPage(
+            movie.id!,
+            movie.posterPath!,
+          ),
+        ),
       ),
     );
   }
