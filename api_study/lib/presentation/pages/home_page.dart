@@ -4,7 +4,6 @@ import 'package:api_study/core/constants.dart';
 
 import 'detail_page.dart';
 import '../widgets/centered_message.dart';
-import '../widgets/centered_progress.dart';
 import '../widgets/movie_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -85,7 +84,7 @@ class _HomePageState extends State<HomePage> {
 
   _buildMovieGrid() {
     if (_controller.loading) {
-      return const CenteredProgress();
+      return const CircularProgressIndicator.adaptive();
     }
 
     if (_controller.movieError != null) {

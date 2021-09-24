@@ -23,4 +23,15 @@ class ProductionCompany {
         name: json["name"],
         originCountry: json["origin_country"],
       );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'logoPath': logoPath,
+      'name': name,
+      'originCountry': originCountry,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
 }

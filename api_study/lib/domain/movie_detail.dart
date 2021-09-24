@@ -96,4 +96,34 @@ class MovieDetail {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'adult': adult,
+      'backdropPath': backdropPath,
+      'belongsToCollection': belongsToCollection,
+      'budget': budget,
+      'genres': genres.map((x) => x.toMap()).toList(),
+      'homepage': homepage,
+      'id': id,
+      'imdbId': imdbId,
+      'originalLanguage': originalLanguage,
+      'originalTitle': originalTitle,
+      'overview': overview,
+      'popularity': popularity,
+      'posterPath': posterPath,
+      'productionCompanies': productionCompanies.map((x) => x.toMap()).toList(),
+      'productionCountries': productionCountries.map((x) => x.toMap()).toList(),
+      'releaseDate': releaseDate.millisecondsSinceEpoch,
+      'revenue': revenue,
+      'runtime': runtime,
+      'spokenLanguages': spokenLanguages.map((x) => x.toMap()).toList(),
+      'status': status,
+      'tagline': tagline,
+      'title': title,
+      'video': video,
+      'voteAverage': voteAverage,
+      'voteCount': voteCount,
+    };
+  }
 }

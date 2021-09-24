@@ -16,4 +16,13 @@ class SpokenLanguage {
         iso6391: json["iso_639_1"],
         name: json["name"],
       );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'iso6391': iso6391,
+      'name': name,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
 }
