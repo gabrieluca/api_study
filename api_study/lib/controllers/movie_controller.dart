@@ -36,4 +36,18 @@ class MovieController {
 
     return result;
   }
+
+  Future<Either<IFailure, MovieResponseModel>> searchMovie(
+      String searchTerm) async {
+    movieError = null;
+    final result = await _repository.searchMovie(searchTerm);
+    result.fold(
+      (error) => movieError = error,
+      (movie) {
+        movieResponseModel = movie;
+      },
+    );
+
+    return result;
+  }
 }

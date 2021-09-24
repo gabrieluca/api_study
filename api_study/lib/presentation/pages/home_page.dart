@@ -1,6 +1,6 @@
+import 'package:api_study/presentation/widgets/home_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:api_study/controllers/movie_controller.dart';
-import 'package:api_study/core/constants.dart';
 
 import 'detail_page.dart';
 import '../widgets/centered_message.dart';
@@ -9,7 +9,6 @@ import '../widgets/movie_card.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  //TODO Search for title method
   //TODO Scroll Pagination
   //TODO Page title (inside scroll)
   //TODO Custom AppBar
@@ -55,7 +54,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  filterByTitle() {}
+  // filterByTitle(String searchTerm) {
+  //   setState(() {
+  //     _controller.moviesList = _controller.movies
+  //         .where((element) =>
+  //             element.title.toLowerCase().contains(searchTerm.toLowerCase()))
+  //         .toList();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +76,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.purple[900],
-      title: const Text(kAppName),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: filterByTitle(),
+    return HomeAppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.help),
+        onPressed: () {
+          //  _controller.searchMovie();
+        },
+      ),
+      title: const Text('Movie Lovers'),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(
+          2,
         ),
-      ],
+        child: Container(
+          color: Colors.purple[900],
+          height: 4,
+        ),
+      ),
+      hintTextInSearchBar: 'Encontre filmes...',
+      searchQueryCallBack: (searchTerm) {
+        // _controller.searchMovie();
+      },
     );
   }
 

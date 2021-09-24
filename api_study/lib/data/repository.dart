@@ -25,6 +25,28 @@ class Repository {
     }
   }
 
+  Future<Either<IFailure, MovieResponseModel>> searchMovie(
+      String searchTerm) async {
+    try {
+      final response = await _dio.get(
+        '/search/movie',
+        queryParameters: {
+          'query': searchTerm,
+        },
+      );
+      final model = MovieResponseModel.fromMap(response.data);
+      return Right(model);
+    } on DioError catch (error) {
+      if (error.response != null) {
+        return Left(Failure(error.response!.data['status_message']));
+      } else {
+        return Left(Failure(kServerError));
+      }
+    } on Exception catch (error) {
+      return Left(Failure(error.toString()));
+    }
+  }
+
   Future<Either<IFailure, MovieDetail>> getMovie(int id) async {
     try {
       final response = await _dio.get('/movie/$id');

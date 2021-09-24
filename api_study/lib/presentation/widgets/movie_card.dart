@@ -17,6 +17,7 @@ class MovieCard extends StatelessWidget {
     final posterUrl =
         'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath';
     const placeholderPath = 'assets/images/placeholder-image.png';
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -36,7 +37,6 @@ class MovieCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
         ),
-        child: Text(movieTitle ?? 'Sem título'),
       ),
     );
   }
