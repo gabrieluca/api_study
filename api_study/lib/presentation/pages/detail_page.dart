@@ -41,7 +41,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     //TODO Hero cover transition
-    //TODO Icon row info
+    //TODO Organize layout DetailPage
     return Scaffold(
       // appBar: _buildAppBar(),
       body: _buildPage(),
@@ -144,20 +144,36 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   _buildStatus() {
+    //TODO Create isReleased: Date info
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Rate(_controller.movieDetail?.voteAverage),
-          IconButton(
-            onPressed: () => Navigator.push(
+          Column(
+            children: [
+              Rate(_controller.movieDetail?.voteAverage),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Icon(Icons.hourglass_bottom),
+                  const SizedBox(width: 8),
+                  Text(_controller.movieDetail!.runtime.toString())
+                ],
+              )
+            ],
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => TrailerPage(widget.movieId),
               ),
             ),
-            icon: const Icon(Icons.ondemand_video),
+            child: const Chip(
+              label: Text('Trailer'),
+              avatar: Icon(Icons.play_circle),
+            ),
           ),
           ChipDate(date: _controller.movieDetail?.releaseDate),
         ],
@@ -170,12 +186,7 @@ class _DetailPageState extends State<DetailPage> {
       return Column(
         children: [
           Text(_controller.movieDetail!.adult.toString()),
-          Text(_controller.movieDetail!.budget.toString()),
           Text(_controller.movieDetail!.status.toString()),
-          Text(_controller.movieDetail!.releaseDate!
-              .toIso8601String()
-              .toString()),
-          Text('${_controller.movieDetail!.runtime.toString()} min'),
         ],
       );
     } else {

@@ -13,6 +13,6 @@ final kDioOptions = BaseOptions(
   headers: {'Authorization': 'Bearer $kApiKey'},
 );
 const kAppName = 'Movie Lovers';
-const kDateFormat = 'dd/MM/yyyy';
+const kDateFormat = 'MM/yyyy';
 const coverPlaceholder =
     'https://www.kindpng.com/picc/m/18-189751_movie-placeholder-hd-png-download.png';
