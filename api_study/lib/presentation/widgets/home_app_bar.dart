@@ -86,6 +86,7 @@ class _HomeAppBarState extends State<HomeAppBar>
     return Stack(
       children: [
         AppBar(
+          centerTitle: true,
           leading: widget.leading,
           title: widget.title,
           bottom: widget.bottom,

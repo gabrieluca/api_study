@@ -77,13 +77,9 @@ class _HomePageState extends State<HomePage> {
 
   _buildAppBar() {
     return HomeAppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.help),
-        onPressed: () {
-          //  _controller.searchMovie();
-        },
+      title: const Text(
+        'Movie Lovers',
       ),
-      title: const Text('Movie Lovers'),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(
           2,
