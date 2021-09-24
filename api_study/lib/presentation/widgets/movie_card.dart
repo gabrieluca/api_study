@@ -12,13 +12,16 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final posterUrl =
+        'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath';
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
           image: DecorationImage(
             image: NetworkImage(
-              'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
+              posterUrl,
             ),
             fit: BoxFit.cover,
           ),

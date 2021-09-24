@@ -12,6 +12,8 @@ class HomePage extends StatefulWidget {
 
   //TODO Search for title method
   //TODO Scroll Pagination
+  //TODO Page title (inside scroll)
+  //TODO Custom AppBar
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -70,7 +72,7 @@ class _HomePageState extends State<HomePage> {
 
   _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.purple,
+      backgroundColor: Colors.purple[900],
       title: const Text(kAppName),
       actions: [
         IconButton(
@@ -92,13 +94,13 @@ class _HomePageState extends State<HomePage> {
 
     return GridView.builder(
       controller: _scrollController,
-      padding: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(8.0),
       itemCount: _controller.moviesCount,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 2,
-        crossAxisSpacing: 2,
-        childAspectRatio: 0.65,
+        crossAxisCount: 3,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        childAspectRatio: 0.6,
       ),
       itemBuilder: _buildMovieCard,
     );

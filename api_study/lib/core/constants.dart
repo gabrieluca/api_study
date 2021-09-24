@@ -12,7 +12,7 @@ final kDioOptions = BaseOptions(
   contentType: 'application/json;charset=utf-8',
   headers: {'Authorization': 'Bearer $kApiKey'},
 );
-const kAppName = 'Movies';
+const kAppName = 'Movie Lovers';
 const kDateFormat = 'dd/MM/yyyy';
 const coverPlaceholder =
     'https://www.kindpng.com/picc/m/18-189751_movie-placeholder-hd-png-download.png';
