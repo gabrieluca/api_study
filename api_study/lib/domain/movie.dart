@@ -1,20 +1,20 @@
 import 'dart:convert';
 
 class Movie {
-  final double popularity;
-  final int voteCount;
-  final bool video;
-  final String posterPath;
-  final int id;
-  final bool adult;
-  final String backdropPath;
-  final String originalLanguage;
-  final String originalTitle;
-  final List<int> genreIds;
+  final double? popularity;
+  final int? voteCount;
+  final bool? video;
+  final String? posterPath;
+  final int? id;
+  final bool? adult;
+  final String? backdropPath;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final List<int>? genreIds;
   final String title;
-  final double voteAverage;
-  final String overview;
-  final DateTime releaseDate;
+  final double? voteAverage;
+  final String? overview;
+  final DateTime? releaseDate;
 
   const Movie({
     required this.popularity,

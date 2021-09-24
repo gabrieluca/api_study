@@ -6,31 +6,31 @@ import 'production_country.dart';
 import 'spoken_language.dart';
 
 class MovieDetail {
-  final bool adult;
+  final bool? adult;
   final String? backdropPath;
   final dynamic belongsToCollection;
-  final int budget;
-  final List<MovieGenre> genres;
-  final String homepage;
-  final int id;
-  final String imdbId;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String posterPath;
-  final List<ProductionCompany> productionCompanies;
-  final List<ProductionCountry> productionCountries;
-  final DateTime releaseDate;
-  final int revenue;
-  final int runtime;
-  final List<SpokenLanguage> spokenLanguages;
-  final String status;
-  final String tagline;
-  final String title;
-  final bool video;
-  final double voteAverage;
-  final int voteCount;
+  final int? budget;
+  final List<MovieGenre>? genres;
+  final String? homepage;
+  final int? id;
+  final String? imdbId;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final String? overview;
+  final double? popularity;
+  final String? posterPath;
+  final List<ProductionCompany>? productionCompanies;
+  final List<ProductionCountry>? productionCountries;
+  final DateTime? releaseDate;
+  final int? revenue;
+  final int? runtime;
+  final List<SpokenLanguage>? spokenLanguages;
+  final String? status;
+  final String? tagline;
+  final String? title;
+  final bool? video;
+  final double? voteAverage;
+  final int? voteCount;
 
   const MovieDetail({
     required this.adult,
@@ -103,7 +103,7 @@ class MovieDetail {
       'backdropPath': backdropPath,
       'belongsToCollection': belongsToCollection,
       'budget': budget,
-      'genres': genres.map((x) => x.toMap()).toList(),
+      'genres': genres?.map((x) => x.toMap()).toList(),
       'homepage': homepage,
       'id': id,
       'imdbId': imdbId,
@@ -112,12 +112,14 @@ class MovieDetail {
       'overview': overview,
       'popularity': popularity,
       'posterPath': posterPath,
-      'productionCompanies': productionCompanies.map((x) => x.toMap()).toList(),
-      'productionCountries': productionCountries.map((x) => x.toMap()).toList(),
-      'releaseDate': releaseDate.millisecondsSinceEpoch,
+      'productionCompanies':
+          productionCompanies?.map((x) => x.toMap()).toList(),
+      'productionCountries':
+          productionCountries?.map((x) => x.toMap()).toList(),
+      'releaseDate': releaseDate?.millisecondsSinceEpoch,
       'revenue': revenue,
       'runtime': runtime,
-      'spokenLanguages': spokenLanguages.map((x) => x.toMap()).toList(),
+      'spokenLanguages': spokenLanguages?.map((x) => x.toMap()).toList(),
       'status': status,
       'tagline': tagline,
       'title': title,

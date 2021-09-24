@@ -122,7 +122,7 @@ class _DetailPageState extends State<DetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _controller.movieDetail?.tagline.toUpperCase() ?? '',
+            _controller.movieDetail?.tagline?.toUpperCase() ?? '',
             style: Theme.of(context).textTheme.bodyText1,
           ),
           const SizedBox(height: 8),
@@ -166,7 +166,7 @@ class _DetailPageState extends State<DetailPage> {
           Text(_controller.movieDetail!.adult.toString()),
           Text(_controller.movieDetail!.budget.toString()),
           Text(_controller.movieDetail!.status.toString()),
-          Text(_controller.movieDetail!.releaseDate
+          Text(_controller.movieDetail!.releaseDate!
               .toIso8601String()
               .toString()),
           Text('${_controller.movieDetail!.runtime.toString()} min'),
@@ -183,7 +183,7 @@ class _DetailPageState extends State<DetailPage> {
       child: Row(
         children: <Widget>[
           if (_controller.movieDetail != null)
-            ..._controller.movieDetail!.genres
+            ..._controller.movieDetail!.genres!
                 .map(
                   (e) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
