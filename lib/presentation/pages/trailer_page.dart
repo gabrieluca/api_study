@@ -1,4 +1,5 @@
 import 'package:api_study/controllers/trailer_controller.dart';
+import 'package:api_study/presentation/widgets/error_handlers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +23,7 @@ class TrailerPage extends StatelessWidget {
             onError: (error) => Text(error.toString()),
           );
         } else {
-          return const Center(child: CircularProgressIndicator.adaptive());
+          return const CenteredLoading();
         }
       },
     );

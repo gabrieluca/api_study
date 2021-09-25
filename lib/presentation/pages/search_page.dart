@@ -1,5 +1,5 @@
 import 'package:api_study/controllers/search_controller.dart';
-import 'package:api_study/presentation/widgets/centered_message.dart';
+import 'package:api_study/presentation/widgets/error_handlers.dart';
 import 'package:api_study/presentation/widgets/home_app_bar.dart';
 import 'package:api_study/presentation/widgets/movie_card.dart';
 import 'package:flutter/cupertino.dart';

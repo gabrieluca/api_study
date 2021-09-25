@@ -2,7 +2,7 @@ import 'package:api_study/core/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../controllers/movie_detail_controller.dart';
-import '../widgets/centered_message.dart';
+import '../widgets/error_handlers.dart';
 import '../widgets/chip_date.dart';
 import '../widgets/rate.dart';
 import 'trailer_page.dart';
@@ -50,7 +50,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Widget _buildPage() {
     if (_controller.loading) {
-      return const Center(child: CircularProgressIndicator.adaptive());
+      return const CenteredLoading();
     }
 
     if (_controller.movieError != null) {
