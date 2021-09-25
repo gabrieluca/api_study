@@ -9,9 +9,11 @@ import '../widgets/movie_card.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  //TODO Search Page
   //TODO Scroll Pagination
   //TODO Page title (inside scroll)
-  //TODO Custom AppBar
+  // TODO Change to Getx
+  // TODO Injectable
 
   @override
   _HomePageState createState() => _HomePageState();
