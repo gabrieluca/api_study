@@ -56,19 +56,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // filterByTitle(String searchTerm) {
-  //   setState(() {
-  //     _controller.moviesList = _controller.movies
-  //         .where((element) =>
-  //             element.title.toLowerCase().contains(searchTerm.toLowerCase()))
-  //         .toList();
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: const HomeAppBar(
+        title: Text('Cinemagic'),
+      ),
       body: RefreshIndicator(
         color: Colors.purple,
         onRefresh: () => _initialize(),
@@ -77,30 +70,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildAppBar() {
-    return HomeAppBar(
-      title: const Text(
-        'Movie Lovers',
-      ),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(
-          2,
-        ),
-        child: Container(
-          color: Colors.purple[900],
-          height: 4,
-        ),
-      ),
-      hintTextInSearchBar: 'Encontre filmes...',
-      searchQueryCallBack: (searchTerm) {
-        // _controller.searchMovie();
-      },
-    );
-  }
-
   _buildMovieGrid() {
     if (_controller.loading) {
-      return const CircularProgressIndicator.adaptive();
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
 
     if (_controller.movieError != null) {

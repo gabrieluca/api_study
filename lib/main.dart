@@ -1,7 +1,7 @@
+import 'package:api_study/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'core/constants.dart';
 import 'core/theme.dart';
-import 'presentation/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: kAppName,
       theme: kThemeData,
-      home: const HomePage(),
+      home: const AppHome(),
     );
   }
 }
