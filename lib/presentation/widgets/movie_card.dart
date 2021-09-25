@@ -29,7 +29,7 @@ class MovieCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
             image: DecorationImage(
               image: NetworkImage(
-                posterPath != null ? posterUrl : coverPlaceholder,
+                posterPath != null ? posterUrl : kCoverPlaceholder,
               ),
               fit: BoxFit.cover,
             ),

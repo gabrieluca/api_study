@@ -6,7 +6,7 @@ class MovieResponseModel {
   int page;
   final int totalResults;
   final int totalPages;
-  final List<Movie> movies;
+  final List<Movie>? movies;
 
   MovieResponseModel({
     required this.page,

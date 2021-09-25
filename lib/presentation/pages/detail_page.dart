@@ -50,7 +50,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Widget _buildPage() {
     if (_controller.loading) {
-      return const CircularProgressIndicator.adaptive();
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
 
     if (_controller.movieError != null) {
@@ -84,7 +84,7 @@ class _DetailPageState extends State<DetailPage> {
               child: Image.network(
                 _controller.movieDetail?.backdropPath != null
                     ? 'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}'
-                    : coverPlaceholder,
+                    : kCoverPlaceholder,
                 fit: BoxFit.cover,
               ),
             ),

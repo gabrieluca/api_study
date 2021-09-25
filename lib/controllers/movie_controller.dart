@@ -29,7 +29,7 @@ class MovieController {
           movieResponseModel = movie;
         } else {
           movieResponseModel?.page = movie.page;
-          movieResponseModel?.movies.addAll(movie.movies);
+          movieResponseModel?.movies?.addAll(movie.movies!);
         }
       },
     );
