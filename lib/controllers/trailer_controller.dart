@@ -36,21 +36,3 @@ class TrailerController extends GetxController with StateMixin {
     change(null, status: RxStatus.success());
   }
 }
-
-// class TrailerzController extends GetxController {
-//   final _repository = Repository();
-
-//   Video? video;
-//   MovieError? movieError;
-
-//   bool loading = true;
-
-//   Future<Either<MovieError, Video>> fetchMovieById(int id) async {
-//     final result = await _repository.getTrailer(id);
-//     result.fold(
-//       (error) => movieError = error,
-//       (videoResponse) => video = videoResponse,
-//     );
-//     return result;
-//   }
-//

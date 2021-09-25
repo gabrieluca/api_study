@@ -1,4 +1,4 @@
-import 'package:api_study/presentation/home.dart';
+import 'package:api_study/presentation/tabs.dart';
 import 'package:flutter/material.dart';
 import 'core/constants.dart';
 import 'core/theme.dart';
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: kAppName,
       theme: kThemeData,
-      home: const AppHome(),
+      home: const Tabs(),
     );
   }
 }

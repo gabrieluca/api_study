@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CenteredMessage extends StatelessWidget {
+  //TODO Clean code and Loading Widget
+
   final String message;
   final Color color;
   final double iconSize;

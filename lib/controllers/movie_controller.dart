@@ -1,50 +1,52 @@
 import 'package:api_study/data/repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:api_study/domain/failure.dart';
+import 'package:get/get.dart';
 
 import '../domain/movie.dart';
 import '../domain/movie_response_model.dart';
 
-class MovieController {
+class MoviesController extends GetxController with StateMixin {
   final _repository = Repository();
 
-  MovieResponseModel? movieResponseModel;
-  IFailure? movieError;
-  bool loading = true;
+  final movieResponseModel = Rxn<MovieResponseModel>();
+  final lastPage = 1.obs;
 
-  List<Movie> get movies => movieResponseModel?.movies ?? <Movie>[];
+  List<Movie> get movies => movieResponseModel.value?.movies ?? <Movie>[];
   int get moviesCount => movies.length;
   bool get hasMovies => moviesCount != 0;
-  int get totalPages => movieResponseModel?.totalPages ?? 1;
-  int get currentPage => movieResponseModel?.page ?? 1;
+  int get totalPages => movieResponseModel.value?.totalPages ?? 1;
+  int get currentPage => movieResponseModel.value?.page ?? 1;
 
-  Future<Either<IFailure, MovieResponseModel>> fetchAllMovies(
-      {int page = 1}) async {
-    movieError = null;
-    final result = await _repository.getAllMovies(page);
-    result.fold(
-      (error) => movieError = error,
-      (movie) {
-        if (movieResponseModel == null) {
-          movieResponseModel = movie;
-        } else {
-          movieResponseModel?.page = movie.page;
-          movieResponseModel?.movies?.addAll(movie.movies!);
-        }
-      },
-    );
-
-    return result;
+  initController() async {
+    change(null, status: RxStatus.loading());
+    await getAllMovies(lastPage.value);
   }
 
-  Future<Either<IFailure, MovieResponseModel>> searchMovie(
-      String searchTerm) async {
-    movieError = null;
-    final result = await _repository.searchMovie(searchTerm);
+  @override
+  void onInit() {
+    super.onInit();
+    change(null, status: RxStatus.loading());
+
+    getAllMovies(currentPage);
+  }
+
+  Future<Either<IFailure, MovieResponseModel>> getAllMovies(
+      [int page = 1]) async {
+    change(null, status: RxStatus.loading());
+    final result = await _repository.getAllMovies(page);
     result.fold(
-      (error) => movieError = error,
+      (error) {
+        change(null, status: RxStatus.error(error.message));
+      },
       (movie) {
-        movieResponseModel = movie;
+        if (movieResponseModel.value == null) {
+          movieResponseModel.value = movie;
+        } else {
+          movieResponseModel.value?.page = movie.page;
+          movieResponseModel.value?.movies?.addAll(movie.movies!);
+        }
+        change(null, status: RxStatus.success());
       },
     );
 

@@ -1,6 +1,12 @@
+import 'package:api_study/controllers/search_controller.dart';
+import 'package:api_study/presentation/widgets/centered_message.dart';
 import 'package:api_study/presentation/widgets/home_app_bar.dart';
+import 'package:api_study/presentation/widgets/movie_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'detail_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -10,26 +16,20 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  var _showCancel = false;
   final _focusNode = FocusNode();
+  final _controller = Get.put(SearchController());
 
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(_onFocusChange);
+    _focusNode.addListener(_controller.onFocusChange);
   }
 
   @override
   void dispose() {
-    _focusNode.removeListener(_onFocusChange);
+    _focusNode.removeListener(_controller.onFocusChange);
     _focusNode.dispose();
     super.dispose();
-  }
-
-  void _onFocusChange() {
-    setState(() {
-      _showCancel = !_showCancel;
-    });
   }
 
   @override
@@ -44,31 +44,37 @@ class _SearchPageState extends State<SearchPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              // height: 50,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      textInputAction: TextInputAction.search,
-                      focusNode: _focusNode,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0),
-                        filled: true,
-                        fillColor: Colors.grey[800],
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10)),
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        hintText: 'Pesquise seus filmes favoritos...',
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    autofocus: true,
+                    textInputAction: TextInputAction.search,
+                    focusNode: _focusNode,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(0),
+                      filled: true,
+                      fillColor: Colors.grey[800],
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.grey,
                       ),
-                      onSubmitted: (value) {},
+                      hintText: 'Pesquise seus filmes favoritos...',
                     ),
+                    onSubmitted: (searchTerm) {
+                      if (searchTerm == '') {
+                        _focusNode.requestFocus();
+                      } else {
+                        _controller.searchMovie(searchTerm);
+                      }
+                    },
                   ),
-                  AnimatedCrossFade(
+                ),
+                Obx(
+                  () => AnimatedCrossFade(
                     alignment: Alignment.center,
                     duration: const Duration(milliseconds: 250),
                     firstChild: TextButton(
@@ -76,15 +82,64 @@ class _SearchPageState extends State<SearchPage> {
                       child: const Text('Cancelar'),
                     ),
                     secondChild: const SizedBox(),
-                    crossFadeState: _showCancel
+                    crossFadeState: _controller.showCancel.value
                         ? CrossFadeState.showFirst
                         : CrossFadeState.showSecond,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+          Flexible(child: _buildMovieGrid()),
         ],
+      ),
+    );
+  }
+
+  _buildMovieGrid() {
+    return _controller.obx(
+      (state) {
+        if (_controller.movies.isEmpty) {
+          return const Center(
+            child: Text(
+              'Ops, não encontramos \nnenhum filme com esse nome!',
+              textAlign: TextAlign.center,
+              style: TextStyle(height: 1.5),
+            ),
+          );
+        } else {
+          return GridView.builder(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: _controller.moviesCount,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 0.6,
+            ),
+            itemBuilder: _buildMovieCard,
+          );
+        }
+      },
+      onLoading: const Center(child: CircularProgressIndicator.adaptive()),
+      onError: (error) => CenteredMessage(message: error.toString()),
+      onEmpty: Container(),
+    );
+  }
+
+  Widget _buildMovieCard(context, index) {
+    final movie = _controller.movies[index];
+    return MovieCard(
+      movieId: movie.id.toString(),
+      posterPath: movie.posterPath,
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailPage(
+            movie.id!,
+            movie.posterPath!,
+          ),
+        ),
       ),
     );
   }

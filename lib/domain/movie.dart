@@ -49,6 +49,6 @@ class Movie {
         title: json["title"],
         voteAverage: json["vote_average"].toDouble(),
         overview: json["overview"],
-        releaseDate: DateTime.parse(json["release_date"]),
+        releaseDate: DateTime.tryParse(json["release_date"]),
       );
 }

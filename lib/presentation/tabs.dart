@@ -35,14 +35,14 @@ final Set<BottomTabs> mainSections = {
   ),
 };
 
-class AppHome extends StatefulWidget {
-  const AppHome({Key? key}) : super(key: key);
+class Tabs extends StatefulWidget {
+  const Tabs({Key? key}) : super(key: key);
 
   @override
-  _AppHomeState createState() => _AppHomeState();
+  _TabsState createState() => _TabsState();
 }
 
-class _AppHomeState extends State<AppHome> {
+class _TabsState extends State<Tabs> {
   int _currentTabIndex = 0;
 
   @override
@@ -63,13 +63,13 @@ class _AppHomeState extends State<AppHome> {
           ),
         ),
         bottomNavigationBar: Container(
-          // decoration: BoxDecoration(
-          //   border: Border(
-          //     top: BorderSide(
-          //       color: Colors.black.withOpacity(.8),
-          //     ),
-          //   ),
-          // ),
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.grey[900]!,
+              ),
+            ),
+          ),
           child: BottomNavigationBar(
             backgroundColor: Colors.purple[900],
             showUnselectedLabels: false,

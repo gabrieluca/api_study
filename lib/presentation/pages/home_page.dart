@@ -1,6 +1,7 @@
 import 'package:api_study/presentation/widgets/home_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:api_study/controllers/movie_controller.dart';
+import 'package:get/get.dart';
 
 import 'detail_page.dart';
 import '../widgets/centered_message.dart';
@@ -9,10 +10,7 @@ import '../widgets/movie_card.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  //TODO Search Page
-  //TODO Scroll Pagination
   //TODO Page title (inside scroll)
-  // TODO Change to Getx
   // TODO Injectable
 
   @override
@@ -20,39 +18,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = MovieController();
+  final _controller = Get.put(MoviesController());
   final _scrollController = ScrollController();
-  int lastPage = 1;
-
   @override
   void initState() {
     super.initState();
     _initScrollListener();
-    _initialize();
   }
 
   _initScrollListener() {
     _scrollController.addListener(() async {
       if (_scrollController.offset >=
           _scrollController.position.maxScrollExtent) {
-        if (_controller.currentPage == lastPage) {
-          lastPage++;
-          await _controller.fetchAllMovies(page: lastPage);
+        if (_controller.currentPage == _controller.lastPage.value) {
+          _controller.lastPage.value++;
+          await _controller.getAllMovies(_controller.lastPage.value);
           setState(() {});
         }
       }
-    });
-  }
-
-  _initialize() async {
-    setState(() {
-      _controller.loading = true;
-    });
-
-    await _controller.fetchAllMovies(page: lastPage);
-
-    setState(() {
-      _controller.loading = false;
     });
   }
 
@@ -64,32 +47,28 @@ class _HomePageState extends State<HomePage> {
       ),
       body: RefreshIndicator(
         color: Colors.purple,
-        onRefresh: () => _initialize(),
+        onRefresh: () => _controller.getAllMovies(),
         child: _buildMovieGrid(),
       ),
     );
   }
 
   _buildMovieGrid() {
-    if (_controller.loading) {
-      return const Center(child: CircularProgressIndicator.adaptive());
-    }
-
-    if (_controller.movieError != null) {
-      return CenteredMessage(message: _controller.movieError!.message);
-    }
-
-    return GridView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.all(8.0),
-      itemCount: _controller.moviesCount,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        childAspectRatio: 0.6,
+    return _controller.obx(
+      (state) => GridView.builder(
+        controller: _scrollController,
+        padding: const EdgeInsets.all(8.0),
+        itemCount: _controller.moviesCount,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          childAspectRatio: 0.6,
+        ),
+        itemBuilder: _buildMovieCard,
       ),
-      itemBuilder: _buildMovieCard,
+      onLoading: const Center(child: CircularProgressIndicator.adaptive()),
+      onError: (error) => CenteredMessage(message: error.toString()),
     );
   }
 
