@@ -1,7 +1,7 @@
 import 'package:api_study/controllers/search_controller.dart';
-import 'package:api_study/presentation/widgets/error_warning.dart';
-import 'package:api_study/presentation/widgets/home_app_bar.dart';
-import 'package:api_study/presentation/widgets/movie_card.dart';
+import 'package:api_study/presentation/components/error_warning.dart';
+import 'package:api_study/presentation/components/home_app_bar.dart';
+import 'package:api_study/presentation/components/movie_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,4 +1,5 @@
 import 'package:api_study/controllers/trailer_controller.dart';
+import 'package:api_study/presentation/components/home_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,11 +44,10 @@ class TrailerPlayer extends StatelessWidget {
       initialVideoId: trailerUrl,
       flags: const YoutubePlayerFlags(
         autoPlay: true,
-        mute: true,
       ),
     );
     return Scaffold(
-      appBar: AppBar(
+      appBar: HomeAppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.maybePop(context);
@@ -67,6 +67,12 @@ class TrailerPlayer extends StatelessWidget {
         ),
         bottomActions: [
           PlayPauseButton(),
+          // FullScreenButton(),
+          // RemainingDuration(),
+          // CurrentPosition(),
+          // PlayPauseButton(),
+          // PlaybackSpeedButton(),
+          // ProgressBar(),
         ],
         onEnded: (data) => data.toString(),
       ),

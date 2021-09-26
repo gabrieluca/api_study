@@ -1,12 +1,12 @@
 import 'package:api_study/core/constants.dart';
-import 'package:api_study/presentation/widgets/trailer_button.dart';
+import 'package:api_study/presentation/components/trailer_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/movie_detail_controller.dart';
-import '../widgets/error_warning.dart';
-import '../widgets/chip_date.dart';
-import '../widgets/rate.dart';
+import '../components/error_warning.dart';
+import '../components/chip_date.dart';
+import '../components/rate.dart';
 import 'trailer_page.dart';
 
 class DetailPage extends StatelessWidget {
@@ -20,7 +20,6 @@ class DetailPage extends StatelessWidget {
       MovieDetailController(movieId),
       tag: movieId.toString(),
     );
-    //TODO Hero cover transition
     //TODO Add fade in title
 
     return Scaffold(
@@ -82,18 +81,15 @@ class DetailPage extends StatelessWidget {
             letterSpacing: 1,
           ),
         ),
-        background: Hero(
-          tag: movieId,
-          child: _controller.movieDetail.value?.backdropPath != null
-              ? Image.network(
-                  'https://image.tmdb.org/t/p/w500${_controller.movieDetail.value?.backdropPath}',
-                  fit: BoxFit.cover,
-                )
-              : Image.asset(
-                  kImagePlaceholderPath,
-                  fit: BoxFit.cover,
-                ),
-        ),
+        background: _controller.movieDetail.value?.backdropPath != null
+            ? Image.network(
+                'https://image.tmdb.org/t/p/w500${_controller.movieDetail.value?.backdropPath}',
+                fit: BoxFit.cover,
+              )
+            : Image.asset(
+                kImagePlaceholderPath,
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({
     Key? key,
     required this.title,
@@ -14,17 +14,11 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  _HomeAppBarState createState() => _HomeAppBarState();
-}
-
-class _HomeAppBarState extends State<HomeAppBar>
-    with SingleTickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      leading: widget.leading,
-      title: widget.title,
+      leading: leading,
+      title: title,
       backgroundColor: Colors.purple[900],
     );
   }

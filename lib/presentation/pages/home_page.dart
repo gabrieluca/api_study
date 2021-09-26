@@ -1,17 +1,14 @@
-import 'package:api_study/presentation/widgets/home_app_bar.dart';
+import 'package:api_study/presentation/components/home_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:api_study/controllers/movie_controller.dart';
 import 'package:get/get.dart';
 
 import 'detail_page.dart';
-import '../widgets/error_warning.dart';
-import '../widgets/movie_card.dart';
+import '../components/error_warning.dart';
+import '../components/movie_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  //TODO Page title (inside scroll)
-  // TODO Injectable
 
   @override
   _HomePageState createState() => _HomePageState();
