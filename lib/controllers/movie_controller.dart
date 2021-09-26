@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../domain/movie.dart';
 import '../domain/movie_response_model.dart';
 
-class MoviesController extends GetxController with StateMixin {
+class HomeController extends GetxController with StateMixin {
   final _repository = Repository();
 
   final movieResponseModel = Rxn<MovieResponseModel>();

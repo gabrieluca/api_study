@@ -1,6 +1,7 @@
 import 'package:api_study/core/constants.dart';
+import 'package:api_study/presentation/widgets/trailer_button.dart';
 import 'package:flutter/material.dart';
-// import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:get/get.dart';
 
 import '../../controllers/movie_detail_controller.dart';
 import '../widgets/error_warning.dart';
@@ -8,77 +9,54 @@ import '../widgets/chip_date.dart';
 import '../widgets/rate.dart';
 import 'trailer_page.dart';
 
-class DetailPage extends StatefulWidget {
+class DetailPage extends StatelessWidget {
   final int movieId;
 
   const DetailPage(this.movieId, {Key? key}) : super(key: key);
 
   @override
-  _DetailPageState createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
-  final _controller = MovieDetailController();
-
-  @override
-  void initState() {
-    super.initState();
-    _initialize();
-  }
-
-  _initialize() async {
-    setState(() {
-      _controller.loading = true;
-    });
-
-    await _controller.fetchMovieById(widget.movieId);
-
-    setState(() {
-      _controller.loading = false;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final _controller = Get.put(
+      MovieDetailController(movieId),
+      tag: movieId.toString(),
+    );
     //TODO Hero cover transition
     //TODO Add fade in title
 
     return Scaffold(
-      body: _buildPage(),
-    );
-  }
-
-  Widget _buildPage() {
-    if (_controller.loading) {
-      return const Center(child: CircularProgressIndicator.adaptive());
-    }
-
-    if (_controller.movieError != null) {
-      return ErrorWarning(message: _controller.movieError!.message);
-    }
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
-      slivers: <Widget>[
-        _buildAppBar(),
-        SliverFillRemaining(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildGenreChips(),
-                _buildInfoRow(),
-                _buildOverview(),
-              ],
+      body: _controller.obx(
+        (state) => CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: <Widget>[
+            _buildAppBar(_controller),
+            SliverFillRemaining(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildGenresList(_controller),
+                    _buildInfoRow(_controller, context),
+                    _buildOverview(_controller, context),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+        onLoading: const Center(child: CircularProgressIndicator.adaptive()),
+        onError: (error) => ErrorWarning(message: error.toString()),
+      ),
     );
   }
 
-  SliverAppBar _buildAppBar() {
+  _buildAppBar(MovieDetailController _controller) {
     return SliverAppBar(
+      leading: IconButton(
+        onPressed: () =>
+            Get.delete<MovieDetailController>(tag: movieId.toString()),
+        icon: Icon(Icons.arrow_back),
+      ),
       expandedHeight: 220.0,
       floating: true,
       pinned: true,
@@ -92,17 +70,18 @@ class _DetailPageState extends State<DetailPage> {
         ],
         titlePadding: const EdgeInsets.all(8.0),
         title: Text(
-          _controller.movieDetail?.title ?? '',
+          _controller.movieDetail.value?.title ?? '',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 16.0,
+            letterSpacing: 1,
           ),
         ),
         background: Hero(
-          tag: widget.movieId,
-          child: _controller.movieDetail?.backdropPath != null
+          tag: movieId,
+          child: _controller.movieDetail.value?.backdropPath != null
               ? Image.network(
-                  'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}',
+                  'https://image.tmdb.org/t/p/w500${_controller.movieDetail.value?.backdropPath}',
                   fit: BoxFit.cover,
                 )
               : Image.asset(
@@ -114,57 +93,83 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  _buildGenreChips() {
-    final _color = Color(0xFF492f59);
-    return Material(
-      child: Row(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  if (_controller.movieDetail != null)
-                    ..._controller.movieDetail!.genres!
-                        .map(
-                          (e) => Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Chip(
-                              backgroundColor: _color,
-                              // backgroundColor: Colors.purple[900],
-                              label: Text(e.name),
-                            ),
+  _buildGenresList(MovieDetailController _controller) {
+    return Row(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                if (_controller.movieDetail.value != null)
+                  ..._controller.movieDetail.value!.genres!
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Chip(
+                            backgroundColor: Color(0xFF492f59),
+                            label: Text(e.name),
                           ),
-                        )
-                        .toList()
-                ],
-              ),
+                        ),
+                      )
+                      .toList()
+              ],
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  _buildOverview(MovieDetailController _controller, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _controller.movieDetail.value?.tagline?.toUpperCase() ?? '',
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            _controller.movieDetail.value?.overview ?? '',
+            textAlign: TextAlign.justify,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );
   }
 
-  _buildInfoRow() {
-    return Container(
-      padding: const EdgeInsets.all(10.0),
+  _buildInfoRow(MovieDetailController _controller, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DateDisplay(date: _controller.movieDetail?.releaseDate),
+              DateDisplay(date: _controller.movieDetail.value?.releaseDate),
               Row(
                 children: [
-                  _buildTrailerButton(),
+                  TrailerButton(
+                    movieId: movieId,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrailerPage(movieId),
+                      ),
+                    ),
+                  ),
                   SizedBox(width: 8),
                   Row(
                     children: [
-                      Text('${_controller.movieDetail!.runtime.toString()} min')
+                      Text(
+                          '${_controller.movieDetail.value?.runtime.toString()} min')
                     ],
                   ),
                 ],
@@ -173,55 +178,7 @@ class _DetailPageState extends State<DetailPage> {
             ],
           ),
           //TODO Rate stars
-          Rating(_controller.movieDetail?.voteAverage),
-        ],
-      ),
-    );
-  }
-
-  _buildTrailerButton() {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TrailerPage(widget.movieId),
-        ),
-      ),
-      child: Material(
-        shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(10)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
-          child: Row(
-            children: [
-              const Icon(Icons.play_arrow),
-              const SizedBox(width: 4),
-              const Text('Trailer'),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  _buildOverview() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _controller.movieDetail?.tagline?.toUpperCase() ?? '',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            _controller.movieDetail?.overview ?? '',
-            textAlign: TextAlign.justify,
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-          const SizedBox(height: 16),
+          Rating(_controller.movieDetail.value?.voteAverage),
         ],
       ),
     );

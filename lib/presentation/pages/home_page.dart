@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = Get.put(MoviesController());
+  final _controller = Get.put(HomeController());
   final _scrollController = ScrollController();
   @override
   void initState() {

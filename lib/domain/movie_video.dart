@@ -1,7 +1,3 @@
-// To parse required this JSON data, do
-//
-//     final video = videoFromMap(jsonString);
-
 import 'dart:convert';
 
 class MovieVideo {

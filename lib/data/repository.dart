@@ -79,4 +79,3 @@ class Repository {
     }
   }
 }
-// 'https://www.youtube.com/watch?v=$video.results.key'
