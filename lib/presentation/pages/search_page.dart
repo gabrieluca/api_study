@@ -1,5 +1,5 @@
 import 'package:api_study/controllers/search_controller.dart';
-import 'package:api_study/presentation/widgets/error_handlers.dart';
+import 'package:api_study/presentation/widgets/error_warning.dart';
 import 'package:api_study/presentation/widgets/home_app_bar.dart';
 import 'package:api_study/presentation/widgets/movie_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -122,7 +122,7 @@ class _SearchPageState extends State<SearchPage> {
         }
       },
       onLoading: const Center(child: CircularProgressIndicator.adaptive()),
-      onError: (error) => CenteredMessage(message: error.toString()),
+      onError: (error) => ErrorWarning(message: error.toString()),
       onEmpty: Container(),
     );
   }

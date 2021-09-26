@@ -4,7 +4,7 @@ import 'package:api_study/controllers/movie_controller.dart';
 import 'package:get/get.dart';
 
 import 'detail_page.dart';
-import '../widgets/error_handlers.dart';
+import '../widgets/error_warning.dart';
 import '../widgets/movie_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
         ),
         itemBuilder: _buildMovieCard,
       ),
-      onLoading: const CenteredLoading(),
-      onError: (error) => CenteredMessage(message: error.toString()),
+      onLoading: const Center(child: CircularProgressIndicator.adaptive()),
+      onError: (error) => ErrorWarning(message: error.toString()),
     );
   }
 

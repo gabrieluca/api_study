@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CenteredMessage extends StatelessWidget {
+class ErrorWarning extends StatelessWidget {
   final String message;
 
-  const CenteredMessage({
+  const ErrorWarning({
     Key? key,
     required this.message,
   }) : super(key: key);
@@ -31,14 +31,5 @@ class CenteredMessage extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class CenteredLoading extends StatelessWidget {
-  const CenteredLoading({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const CenteredLoading();
   }
 }

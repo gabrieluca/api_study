@@ -2,7 +2,7 @@ import 'package:api_study/core/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../controllers/movie_detail_controller.dart';
-import '../widgets/error_handlers.dart';
+import '../widgets/error_warning.dart';
 import '../widgets/chip_date.dart';
 import '../widgets/rate.dart';
 import 'trailer_page.dart';
@@ -54,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     if (_controller.movieError != null) {
-      return CenteredMessage(message: _controller.movieError!.message);
+      return ErrorWarning(message: _controller.movieError!.message);
     }
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
