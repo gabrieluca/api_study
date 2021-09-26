@@ -10,7 +10,10 @@ class TrailerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller = Get.put(TrailerController(movieId));
+    final _controller = Get.put(
+      TrailerController(movieId),
+      tag: movieId.toString(),
+    );
 
     return Obx(
       () {
@@ -35,7 +38,7 @@ class TrailerPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO Fix to start the video
+    //TODO Add player buttons
     final YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: trailerUrl,
       flags: const YoutubePlayerFlags(
