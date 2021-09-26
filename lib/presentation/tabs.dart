@@ -2,39 +2,6 @@ import 'package:api_study/presentation/pages/home_page.dart';
 import 'package:api_study/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
-class BottomTabs {
-  final String title;
-  final GlobalKey<NavigatorState> navigatorKey;
-  final Widget tab;
-  final IconData unselectedIcon;
-  final IconData selectedIcon;
-
-  BottomTabs({
-    required this.title,
-    required this.unselectedIcon,
-    required this.selectedIcon,
-    required this.tab,
-    required this.navigatorKey,
-  });
-}
-
-final Set<BottomTabs> mainSections = {
-  BottomTabs(
-    tab: const HomePage(),
-    title: 'Home',
-    unselectedIcon: Icons.home_rounded,
-    selectedIcon: Icons.home_rounded,
-    navigatorKey: GlobalKey<NavigatorState>(),
-  ),
-  BottomTabs(
-    tab: const SearchPage(),
-    title: 'Pesquisar',
-    unselectedIcon: Icons.search,
-    selectedIcon: Icons.search,
-    navigatorKey: GlobalKey<NavigatorState>(),
-  ),
-};
-
 class Tabs extends StatefulWidget {
   const Tabs({Key? key}) : super(key: key);
 
@@ -77,9 +44,8 @@ class _TabsState extends State<Tabs> {
             items: mainSections
                 .map(
                   (mainNavigationTab) => BottomNavigationBarItem(
-                    label: mainNavigationTab.title,
-                    icon: Icon(mainNavigationTab.unselectedIcon),
-                    activeIcon: Icon(mainNavigationTab.selectedIcon),
+                    label: '',
+                    icon: Icon(mainNavigationTab.icon),
                   ),
                 )
                 .toList(),
@@ -106,3 +72,28 @@ class _TabsState extends State<Tabs> {
     );
   }
 }
+
+class BottomTabs {
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Widget tab;
+  final IconData icon;
+
+  BottomTabs({
+    required this.icon,
+    required this.tab,
+    required this.navigatorKey,
+  });
+}
+
+final Set<BottomTabs> mainSections = {
+  BottomTabs(
+    tab: const HomePage(),
+    icon: Icons.home_rounded,
+    navigatorKey: GlobalKey<NavigatorState>(),
+  ),
+  BottomTabs(
+    tab: const SearchPage(),
+    icon: Icons.search,
+    navigatorKey: GlobalKey<NavigatorState>(),
+  ),
+};

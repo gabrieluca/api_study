@@ -28,7 +28,7 @@ class DetailPage extends StatelessWidget {
         (state) => CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: <Widget>[
-            _buildAppBar(_controller),
+            _buildAppBar(context, _controller),
             SliverFillRemaining(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -50,11 +50,16 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  _buildAppBar(MovieDetailController _controller) {
+  _buildAppBar(
+    BuildContext context,
+    MovieDetailController _controller,
+  ) {
     return SliverAppBar(
       leading: IconButton(
-        onPressed: () =>
-            Get.delete<MovieDetailController>(tag: movieId.toString()),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Get.delete<MovieDetailController>(tag: movieId.toString());
+        },
         icon: Icon(Icons.arrow_back),
       ),
       expandedHeight: 220.0,

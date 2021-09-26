@@ -54,21 +54,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildMovieGrid() {
-    return _controller.obx(
-      (state) => GridView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(8.0),
-        itemCount: _controller.moviesCount,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          childAspectRatio: 0.6,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text(
+                'Popular movies',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
         ),
-        itemBuilder: _buildMovieCard,
-      ),
-      onLoading: const Center(child: CircularProgressIndicator.adaptive()),
-      onError: (error) => ErrorWarning(message: error.toString()),
+        Expanded(
+          child: _controller.obx(
+            (state) => GridView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(8.0),
+              itemCount: _controller.moviesCount,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 0.6,
+              ),
+              itemBuilder: _buildMovieCard,
+            ),
+            onLoading:
+                const Center(child: CircularProgressIndicator.adaptive()),
+            onError: (error) => ErrorWarning(message: error.toString()),
+          ),
+        ),
+      ],
     );
   }
 

@@ -37,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: const HomeAppBar(
         title: Text(
-          'Pesquisar',
+          'Search',
         ),
       ),
       body: Column(
@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
                         Icons.search,
                         color: Colors.grey,
                       ),
-                      hintText: 'Pesquise seus filmes favoritos...',
+                      hintText: 'Search your favorite movies...',
                     ),
                     onSubmitted: (searchTerm) {
                       if (searchTerm == '') {
