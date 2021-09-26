@@ -14,7 +14,4 @@ final kDioOptions = BaseOptions(
 );
 const kAppName = 'Movie Lovers';
 const kDateFormat = 'MM/yyyy';
-const kCoverPlaceholder =
-    'https://www.kindpng.com/picc/m/18-189751_movie-placeholder-hd-png-download.png';
-//TODO Change image placeholder
 const kImagePlaceholderPath = 'assets/images/placeholder-image.png';

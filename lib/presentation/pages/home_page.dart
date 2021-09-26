@@ -82,7 +82,6 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(
           builder: (context) => DetailPage(
             movie.id!,
-            movie.posterPath!,
           ),
         ),
       ),

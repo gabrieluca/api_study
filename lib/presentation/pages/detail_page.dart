@@ -9,9 +9,8 @@ import 'trailer_page.dart';
 
 class DetailPage extends StatefulWidget {
   final int movieId;
-  final String posterPath;
 
-  const DetailPage(this.movieId, this.posterPath, {Key? key}) : super(key: key);
+  const DetailPage(this.movieId, {Key? key}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -42,15 +41,16 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     //TODO Hero cover transition
     //TODO Organize layout DetailPage
+    //TODO Add fade in title
+
     return Scaffold(
-      // appBar: _buildAppBar(),
       body: _buildPage(),
     );
   }
 
   Widget _buildPage() {
     if (_controller.loading) {
-      return const CenteredLoading();
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
 
     if (_controller.movieError != null) {
@@ -81,12 +81,15 @@ class _DetailPageState extends State<DetailPage> {
             ),
             background: Hero(
               tag: widget.movieId,
-              child: Image.network(
-                _controller.movieDetail?.backdropPath != null
-                    ? 'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}'
-                    : kCoverPlaceholder,
-                fit: BoxFit.cover,
-              ),
+              child: _controller.movieDetail?.backdropPath != null
+                  ? Image.network(
+                      'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}',
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      kImagePlaceholderPath,
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
         ),

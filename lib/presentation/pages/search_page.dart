@@ -137,7 +137,6 @@ class _SearchPageState extends State<SearchPage> {
         MaterialPageRoute(
           builder: (context) => DetailPage(
             movie.id!,
-            movie.posterPath!,
           ),
         ),
       ),

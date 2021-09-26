@@ -27,12 +27,19 @@ class MovieCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            image: DecorationImage(
-              image: NetworkImage(
-                posterPath != null ? posterUrl : kCoverPlaceholder,
-              ),
-              fit: BoxFit.cover,
-            ),
+            image: posterPath != null
+                ? DecorationImage(
+                    image: NetworkImage(
+                      posterUrl,
+                    ),
+                    fit: BoxFit.cover,
+                  )
+                : const DecorationImage(
+                    image: AssetImage(
+                      kImagePlaceholderPath,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
       ),
