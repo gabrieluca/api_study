@@ -59,40 +59,7 @@ class _DetailPageState extends State<DetailPage> {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: <Widget>[
-        SliverAppBar(
-          expandedHeight: 220.0,
-          floating: true,
-          pinned: true,
-          snap: false,
-          stretch: true,
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: true,
-            stretchModes: const [
-              StretchMode.zoomBackground,
-              StretchMode.fadeTitle,
-            ],
-            titlePadding: const EdgeInsets.all(8.0),
-            title: Text(
-              _controller.movieDetail?.title ?? '',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-            ),
-            background: Hero(
-              tag: widget.movieId,
-              child: _controller.movieDetail?.backdropPath != null
-                  ? Image.network(
-                      'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}',
-                      fit: BoxFit.cover,
-                    )
-                  : Image.asset(
-                      kImagePlaceholderPath,
-                      fit: BoxFit.cover,
-                    ),
-            ),
-          ),
-        ),
+        _buildAppBar(),
         SliverFillRemaining(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -100,13 +67,50 @@ class _DetailPageState extends State<DetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildGenreChips(),
-                _buildStatus(),
+                _buildInfoRow(),
                 _buildOverview(),
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+
+  SliverAppBar _buildAppBar() {
+    return SliverAppBar(
+      expandedHeight: 220.0,
+      floating: true,
+      pinned: true,
+      snap: false,
+      stretch: true,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        stretchModes: const [
+          StretchMode.zoomBackground,
+          StretchMode.fadeTitle,
+        ],
+        titlePadding: const EdgeInsets.all(8.0),
+        title: Text(
+          _controller.movieDetail?.title ?? '',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+          ),
+        ),
+        background: Hero(
+          tag: widget.movieId,
+          child: _controller.movieDetail?.backdropPath != null
+              ? Image.network(
+                  'https://image.tmdb.org/t/p/w500${_controller.movieDetail?.backdropPath}',
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  kImagePlaceholderPath,
+                  fit: BoxFit.cover,
+                ),
+        ),
+      ),
     );
   }
 
@@ -144,7 +148,7 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  _buildStatus() {
+  _buildInfoRow() {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
@@ -153,35 +157,10 @@ class _DetailPageState extends State<DetailPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ChipDate(date: _controller.movieDetail?.releaseDate),
-
+              DateDisplay(date: _controller.movieDetail?.releaseDate),
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TrailerPage(widget.movieId),
-                      ),
-                    ),
-                    child: Material(
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      // color: Color(0xFFffe796),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 8),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.play_arrow),
-                            const SizedBox(width: 4),
-                            const Text('Trailer'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  _buildTrailerButton(),
                   SizedBox(width: 8),
                   Row(
                     children: [
@@ -191,12 +170,37 @@ class _DetailPageState extends State<DetailPage> {
                 ],
               ),
               const SizedBox(height: 8),
-
-              //TODO Rate stars
             ],
           ),
-          Rate(_controller.movieDetail?.voteAverage),
+          //TODO Rate stars
+          Rating(_controller.movieDetail?.voteAverage),
         ],
+      ),
+    );
+  }
+
+  _buildTrailerButton() {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TrailerPage(widget.movieId),
+        ),
+      ),
+      child: Material(
+        shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
+          child: Row(
+            children: [
+              const Icon(Icons.play_arrow),
+              const SizedBox(width: 4),
+              const Text('Trailer'),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -3,12 +3,12 @@ import 'package:intl/intl.dart';
 
 import '../../core/constants.dart';
 
-class ChipDate extends StatelessWidget {
+class DateDisplay extends StatelessWidget {
   final DateTime? date;
   final Color color;
   final String dateFormat;
 
-  const ChipDate({
+  const DateDisplay({
     Key? key,
     required this.date,
     this.color = Colors.red,

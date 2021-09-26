@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Rate extends StatelessWidget {
+class Rating extends StatelessWidget {
   final double? value;
 
-  const Rate(
+  const Rating(
     this.value, {
     Key? key,
   }) : super(key: key);
