@@ -20,7 +20,6 @@ class DetailPage extends StatelessWidget {
       MovieDetailController(movieId),
       tag: movieId.toString(),
     );
-    //TODO Add fade in title
 
     return Scaffold(
       body: _controller.obx(
@@ -178,7 +177,6 @@ class DetailPage extends StatelessWidget {
               const SizedBox(height: 8),
             ],
           ),
-          //TODO Rate stars
           Rating(_controller.movieDetail.value?.voteAverage),
         ],
       ),

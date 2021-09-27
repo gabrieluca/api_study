@@ -1,6 +1,6 @@
 import 'package:api_study/presentation/components/home_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:api_study/controllers/movie_controller.dart';
+import 'package:api_study/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
 import 'detail_page.dart';

@@ -39,7 +39,6 @@ class TrailerPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO Add player buttons
     final YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: trailerUrl,
       flags: const YoutubePlayerFlags(
