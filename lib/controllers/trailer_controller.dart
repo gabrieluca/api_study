@@ -1,6 +1,7 @@
-import 'package:api_study/data/repository.dart';
-import 'package:api_study/domain/movie_video.dart';
 import 'package:get/get.dart';
+
+import '../data/repository.dart';
+import '../domain/movie_video.dart';
 
 class TrailerController extends GetxController with StateMixin {
   TrailerController(

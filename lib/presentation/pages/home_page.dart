@@ -1,11 +1,11 @@
-import 'package:api_study/presentation/components/home_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:api_study/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
-import 'detail_page.dart';
+import '../../controllers/home_controller.dart';
 import '../components/error_warning.dart';
+import '../components/home_app_bar.dart';
 import '../components/movie_card.dart';
+import 'detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,18 +23,18 @@ class _HomePageState extends State<HomePage> {
     _initScrollListener();
   }
 
-  _initScrollListener() {
-    _scrollController.addListener(() async {
-      if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent) {
-        if (_controller.currentPage == _controller.lastPage.value) {
-          _controller.lastPage.value++;
-          await _controller.getAllMovies(_controller.lastPage.value);
-          setState(() {});
-        }
-      }
-    });
-  }
+  void _initScrollListener() => _scrollController.addListener(
+        () async {
+          if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent) {
+            if (_controller.currentPage == _controller.lastPage.value) {
+              _controller.lastPage.value++;
+              await _controller.getAllMovies(_controller.lastPage.value);
+              setState(() {});
+            }
+          }
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -44,20 +44,23 @@ class _HomePageState extends State<HomePage> {
       ),
       body: RefreshIndicator(
         color: Colors.purple,
-        onRefresh: () => _controller.getAllMovies(),
+        onRefresh: _controller.getAllMovies,
         child: _buildMovieGrid(),
       ),
     );
   }
 
   _buildMovieGrid() {
+    dynamic a = 8;
+    a = 9.0;
+    print(a.runtimeType);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Row(
-            children: [
+            children: const [
               Text(
                 'Popular movies',
                 style: TextStyle(

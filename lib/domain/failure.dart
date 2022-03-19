@@ -2,9 +2,7 @@ abstract class IFailure implements Exception {
   late String message;
 
   @override
-  String toString() {
-    return message;
-  }
+  String toString() => message;
 }
 
 class Failure extends IFailure {

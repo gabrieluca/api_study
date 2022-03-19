@@ -9,12 +9,12 @@ void main() {
   group(
     'Repository tests',
     () {
-      final _repository = Repository();
+      final repository = Repository();
       test(
         'Should get all popular movies',
         () async {
-          const _input = 2;
-          final result = await _repository.getAllMovies(_input);
+          const input = 2;
+          final result = await repository.getAllMovies(input);
           expect(result.isRight(), true);
           expect(result.fold(id, id), isA<MovieResponseModel>());
         },

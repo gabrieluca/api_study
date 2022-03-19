@@ -1,8 +1,8 @@
-import 'package:api_study/data/repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:api_study/domain/failure.dart';
 import 'package:get/get.dart';
 
+import '../data/repository.dart';
+import '../domain/failure.dart';
 import '../domain/movie.dart';
 import '../domain/movie_response_model.dart';
 
@@ -18,7 +18,7 @@ class HomeController extends GetxController with StateMixin {
   int get totalPages => movieResponseModel.value?.totalPages ?? 1;
   int get currentPage => movieResponseModel.value?.page ?? 1;
 
-  initController() async {
+  Future<void> initController() async {
     change(null, status: RxStatus.loading());
     await getAllMovies(lastPage.value);
   }
@@ -31,8 +31,9 @@ class HomeController extends GetxController with StateMixin {
     getAllMovies(currentPage);
   }
 
-  Future<Either<IFailure, MovieResponseModel>> getAllMovies(
-      [int page = 1]) async {
+  Future<Either<IFailure, MovieResponseModel>> getAllMovies([
+    int page = 1,
+  ]) async {
     change(null, status: RxStatus.loading());
     final result = await _repository.getAllMovies(page);
     result.fold(

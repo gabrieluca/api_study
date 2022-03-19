@@ -15,7 +15,6 @@ class ErrorWarning extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.max,
         children: [
           const Icon(
             Icons.warning,

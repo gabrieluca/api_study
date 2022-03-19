@@ -1,6 +1,7 @@
-import 'package:api_study/presentation/pages/home_page.dart';
-import 'package:api_study/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
+
+import 'pages/home_page.dart';
+import 'pages/search_page.dart';
 
 class Tabs extends StatefulWidget {
   const Tabs({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _TabsState extends State<Tabs> {
                 .toList(),
           ),
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
@@ -62,15 +63,13 @@ class _TabsState extends State<Tabs> {
     );
   }
 
-  Widget _buildIndexedPageTab(BottomTabs mainSection) {
-    return Navigator(
-      key: mainSection.navigatorKey,
-      onGenerateRoute: (settings) => MaterialPageRoute(
-        settings: settings,
-        builder: (context) => mainSections.toList()[_currentTabIndex].tab,
-      ),
-    );
-  }
+  Widget _buildIndexedPageTab(BottomTabs mainSection) => Navigator(
+        key: mainSection.navigatorKey,
+        onGenerateRoute: (settings) => MaterialPageRoute(
+          settings: settings,
+          builder: (context) => mainSections.toList()[_currentTabIndex].tab,
+        ),
+      );
 }
 
 class BottomTabs {

@@ -1,7 +1,8 @@
-import 'package:api_study/presentation/tabs.dart';
 import 'package:flutter/material.dart';
+
 import 'core/constants.dart';
 import 'core/theme.dart';
+import 'presentation/tabs.dart';
 
 void main() {
   runApp(const MyApp());

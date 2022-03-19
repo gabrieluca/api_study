@@ -8,9 +8,9 @@ class ProductionCompany {
 
   ProductionCompany({
     required this.id,
-    this.logoPath,
     required this.name,
     required this.originCountry,
+    this.logoPath,
   });
 
   factory ProductionCompany.fromJson(String str) =>

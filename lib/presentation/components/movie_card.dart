@@ -1,5 +1,6 @@
-import 'package:api_study/core/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/constants.dart';
 
 class MovieCard extends StatelessWidget {
   final String movieId;

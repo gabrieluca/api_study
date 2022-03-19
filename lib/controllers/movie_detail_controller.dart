@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:api_study/data/repository.dart';
-import 'package:api_study/domain/failure.dart';
 import 'package:get/get.dart';
 
+import '../data/repository.dart';
+import '../domain/failure.dart';
 import '../domain/movie_detail.dart';
 
 class MovieDetailController extends GetxController with StateMixin {

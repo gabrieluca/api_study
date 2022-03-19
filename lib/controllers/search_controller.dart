@@ -1,9 +1,10 @@
-import 'package:api_study/data/repository.dart';
-import 'package:api_study/domain/failure.dart';
-import 'package:api_study/domain/movie.dart';
-import 'package:api_study/domain/movie_response_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+
+import '../data/repository.dart';
+import '../domain/failure.dart';
+import '../domain/movie.dart';
+import '../domain/movie_response_model.dart';
 
 class SearchController extends GetxController with StateMixin {
   SearchController();
@@ -34,7 +35,8 @@ class SearchController extends GetxController with StateMixin {
   }
 
   Future<Either<IFailure, MovieResponseModel>> searchMovie(
-      String searchTerm) async {
+    String searchTerm,
+  ) async {
     change(null, status: RxStatus.loading());
 
     final result = await _repository.searchMovie(searchTerm);

@@ -9,8 +9,8 @@ class DateDisplay extends StatelessWidget {
   final String dateFormat;
 
   const DateDisplay({
-    Key? key,
     required this.date,
+    Key? key,
     this.color = Colors.red,
     this.dateFormat = kDateFormat,
   }) : super(key: key);

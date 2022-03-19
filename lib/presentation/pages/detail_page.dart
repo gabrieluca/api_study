@@ -1,12 +1,14 @@
-import 'package:api_study/core/constants.dart';
-import 'package:api_study/presentation/components/trailer_button.dart';
+// ignore_for_file: require_trailing_commas
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/movie_detail_controller.dart';
-import '../components/error_warning.dart';
+import '../../core/constants.dart';
 import '../components/chip_date.dart';
+import '../components/error_warning.dart';
 import '../components/rate.dart';
+import '../components/trailer_button.dart';
 import 'trailer_page.dart';
 
 class DetailPage extends StatelessWidget {
@@ -48,7 +50,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  _buildAppBar(
+  SliverAppBar _buildAppBar(
     BuildContext context,
     MovieDetailController _controller,
   ) {
@@ -58,12 +60,11 @@ class DetailPage extends StatelessWidget {
           Navigator.of(context).pop();
           Get.delete<MovieDetailController>(tag: movieId.toString());
         },
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
       ),
       expandedHeight: 220.0,
       floating: true,
       pinned: true,
-      snap: false,
       stretch: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
@@ -93,14 +94,13 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  _buildGenresList(MovieDetailController _controller) {
+  Row _buildGenresList(MovieDetailController _controller) {
     return Row(
       children: [
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 if (_controller.movieDetail.value != null)
                   ..._controller.movieDetail.value!.genres!
@@ -108,7 +108,7 @@ class DetailPage extends StatelessWidget {
                         (e) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Chip(
-                            backgroundColor: Color(0xFF492f59),
+                            backgroundColor: const Color(0xFF492f59),
                             label: Text(e.name),
                           ),
                         ),
@@ -122,7 +122,8 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  _buildOverview(MovieDetailController _controller, BuildContext context) {
+  Padding _buildOverview(
+      MovieDetailController _controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -144,7 +145,8 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  _buildInfoRow(MovieDetailController _controller, BuildContext context) {
+  Padding _buildInfoRow(
+      MovieDetailController _controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -165,7 +167,7 @@ class DetailPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Row(
                     children: [
                       Text(

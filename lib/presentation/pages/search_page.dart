@@ -1,11 +1,10 @@
-import 'package:api_study/controllers/search_controller.dart';
-import 'package:api_study/presentation/components/error_warning.dart';
-import 'package:api_study/presentation/components/home_app_bar.dart';
-import 'package:api_study/presentation/components/movie_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/search_controller.dart';
+import '../components/error_warning.dart';
+import '../components/home_app_bar.dart';
+import '../components/movie_card.dart';
 import 'detail_page.dart';
 
 class SearchPage extends StatefulWidget {
@@ -52,12 +51,13 @@ class _SearchPageState extends State<SearchPage> {
                     textInputAction: TextInputAction.search,
                     focusNode: _focusNode,
                     decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(0),
+                      contentPadding: EdgeInsets.zero,
                       filled: true,
                       fillColor: Colors.grey[800],
                       border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10)),
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       prefixIcon: const Icon(
                         Icons.search,
                         color: Colors.grey,
@@ -78,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
                     alignment: Alignment.center,
                     duration: const Duration(milliseconds: 250),
                     firstChild: TextButton(
-                      onPressed: () => _focusNode.unfocus(),
+                      onPressed: _focusNode.unfocus,
                       child: const Text('Cancelar'),
                     ),
                     secondChild: const SizedBox(),

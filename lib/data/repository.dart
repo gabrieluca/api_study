@@ -1,10 +1,11 @@
-import 'package:api_study/core/constants.dart';
-import 'package:api_study/domain/movie_video.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:api_study/domain/failure.dart';
+
+import '../core/constants.dart';
+import '../domain/failure.dart';
 import '../domain/movie_detail.dart';
 import '../domain/movie_response_model.dart';
+import '../domain/movie_video.dart';
 
 class Repository {
   final Dio _dio = Dio(kDioOptions);
@@ -12,11 +13,12 @@ class Repository {
   Future<Either<IFailure, MovieResponseModel>> getAllMovies(int page) async {
     try {
       final response = await _dio.get('/movie/popular?page=$page');
-      final model = MovieResponseModel.fromMap(response.data);
+      final model =
+          MovieResponseModel.fromMap(response.data as Map<String, dynamic>);
       return Right(model);
     } on DioError catch (error) {
       if (error.response != null) {
-        return Left(Failure(error.response!.data['status_message']));
+        return Left(Failure(error.response!.data['status_message'] as String));
       } else {
         return Left(Failure(kServerError));
       }
@@ -26,7 +28,8 @@ class Repository {
   }
 
   Future<Either<IFailure, MovieResponseModel>> searchMovie(
-      String searchTerm) async {
+    String searchTerm,
+  ) async {
     try {
       final response = await _dio.get(
         '/search/movie',

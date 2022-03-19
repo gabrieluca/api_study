@@ -1,9 +1,11 @@
-import 'package:api_study/controllers/trailer_controller.dart';
-import 'package:api_study/presentation/components/home_app_bar.dart';
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../controllers/trailer_controller.dart';
+import '../components/home_app_bar.dart';
 
 class TrailerPage extends StatelessWidget {
   const TrailerPage(this.movieId, {Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class TrailerPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final YoutubePlayerController _controller = YoutubePlayerController(
+    final _controller = YoutubePlayerController(
       initialVideoId: trailerUrl,
       flags: const YoutubePlayerFlags(
         autoPlay: true,
