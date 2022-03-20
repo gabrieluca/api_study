@@ -50,10 +50,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildMovieGrid() {
-    dynamic a = 8;
-    a = 9.0;
-    print(a.runtimeType);
+  Column _buildMovieGrid() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

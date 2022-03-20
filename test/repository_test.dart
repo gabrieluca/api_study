@@ -1,7 +1,7 @@
-import 'package:api_study/data/repository.dart';
-import 'package:api_study/domain/movie_detail.dart';
-import 'package:api_study/domain/movie_response_model.dart';
-import 'package:api_study/domain/movie_video.dart';
+import 'package:api_study/movies/data/repository.dart';
+import 'package:api_study/movies/domain/movie_detail.dart';
+import 'package:api_study/movies/domain/movie_response_model.dart';
+import 'package:api_study/movies/domain/movie_video.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 

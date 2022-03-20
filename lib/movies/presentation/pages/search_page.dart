@@ -96,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  _buildMovieGrid() {
+  Widget _buildMovieGrid() {
     return _controller.obx(
       (state) {
         if (_controller.movies.isEmpty) {
