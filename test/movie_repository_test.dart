@@ -4,19 +4,18 @@ import 'package:api_study/global/data/remote/i_http_service.dart';
 import 'package:api_study/movie/data/movie_repository.dart';
 import 'package:api_study/movies/domain/movie_detail.dart';
 import 'package:api_study/movies/domain/movie_response_model.dart';
-import 'package:api_study/movies/domain/movie_video.dart';
+import 'package:api_study/movies/domain/movie_trailer.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'local_json.dart';
-import 'movie_repository_test.mocks.dart';
+import 'mock_json.dart';
 
-@GenerateMocks([IHttpService])
+class MocktIHttpService extends Mock implements IHttpService {}
+
 void main() {
-  final httpService = MockIHttpService();
+  final httpService = MocktIHttpService();
   final datasource = Datasource(httpService);
   final repository = MovieRepository(datasource);
 
@@ -24,96 +23,149 @@ void main() {
   const getMovieEndpoint = '/movie/508947';
   const getTrailerEndpoint = '/movie/508947/videos';
   const searchMovieEndpoint = '/search/movie';
+  final requestOptions = RequestOptions(path: '');
+  group("getAllMovies", () {
+    test(
+      'should return a MovieResponseModel on success',
+      () async {
+        final mockResponse = Response(
+          data: allMoviesJson,
+          requestOptions: requestOptions,
+        );
+
+        when(
+          () => httpService.get(getAllMoviesEndpoint),
+        ).thenAnswer(
+          (_) async => mockResponse,
+        );
+
+        final result = await repository.getAllMovies(1);
+
+        verify(() => httpService.get(getAllMoviesEndpoint));
+        expect(result.isRight(), true);
+        expect(result.fold(id, id), isA<MovieResponseModel>());
+      },
+    );
+    test(
+      'should return Failure on wrong data',
+      () async {
+        final mockResponse = Response(
+          data: 'Not found',
+          requestOptions: requestOptions,
+        );
+
+        when(
+          () => httpService.get(getAllMoviesEndpoint),
+        ).thenAnswer(
+          (_) async => mockResponse,
+        );
+
+        final result = await repository.getAllMovies(1);
+
+        verify(() => httpService.get(getAllMoviesEndpoint));
+        expect(result.isLeft(), true);
+        expect(result.fold(id, id), isA<Failure>());
+      },
+    );
+  });
+  group("getMovie", () {
+    test(
+      'should return a MovieDetail on success',
+      () async {
+        final mockResponse = Response(
+          data: movieJson,
+          requestOptions: requestOptions,
+        );
+        when(
+          () => httpService.get(getMovieEndpoint),
+        ).thenAnswer(
+          (_) async => mockResponse,
+        );
+
+        final result = await repository.getMovie(508947);
+
+        verify(() => httpService.get(getMovieEndpoint));
+        expect(result.isRight(), true);
+        expect(result.fold(id, id), isA<MovieDetail>());
+      },
+    );
+    test(
+      'should return Failure on wrong data',
+      () async {
+        final mockResponse = Response(
+          data: 'Not found',
+          requestOptions: requestOptions,
+        );
+        when(
+          () => httpService.get(getMovieEndpoint),
+        ).thenAnswer(
+          (_) async => mockResponse,
+        );
+
+        final result = await repository.getMovie(508947);
+
+        verify(() => httpService.get(getMovieEndpoint));
+        expect(result.isLeft(), true);
+        expect(result.fold(id, id), isA<Failure>());
+      },
+    );
+  });
+  group("getMovieTrailer", () {
+    test(
+      'should return a MovieTrailer on success',
+      () async {
+        final mockResponse = Response(
+          data: trailerJson,
+          requestOptions: requestOptions,
+        );
+        when(
+          () => httpService.get(getTrailerEndpoint),
+        ).thenAnswer(
+          (_) async => mockResponse,
+        );
+
+        final result = await repository.getTrailer(508947);
+
+        verify(() => httpService.get(getTrailerEndpoint));
+        expect(result.isRight(), true);
+        expect(result.fold(id, id), isA<MovieTrailer>());
+      },
+    );
+
+    test(
+      'should return Failure on wrong data',
+      () async {
+        final mockResponse = Response(
+          data: 'Not found',
+          requestOptions: requestOptions,
+        );
+        when(
+          () => httpService.get(getTrailerEndpoint),
+        ).thenAnswer(
+          (_) async => mockResponse,
+        );
+
+        final result = await repository.getTrailer(508947);
+
+        verify(() => httpService.get(getTrailerEndpoint));
+        expect(result.isLeft(), true);
+        expect(result.fold(id, id), isA<Failure>());
+      },
+    );
+  });
+
   group(
-    "Movie Repository from Mock",
+    "searchMovies",
     () {
       test(
-        'should getAllMovies from Mock',
-        () async {
-          final mockResponse = Response(
-            data: allMoviesJson,
-            requestOptions: RequestOptions(
-              baseUrl: 'https://api.themoviedb.org/3/',
-              path: getAllMoviesEndpoint,
-              method: 'GET',
-            ),
-          );
-
-          when(
-            httpService.get(getAllMoviesEndpoint),
-          ).thenAnswer(
-            (_) async => mockResponse,
-          );
-
-          final result = await repository.getAllMovies(1);
-
-          verify(httpService.get(getAllMoviesEndpoint));
-          expect(result.isRight(), true);
-          expect(result.fold(id, id), isA<MovieResponseModel>());
-        },
-      );
-      test(
-        'should getMovie',
-        () async {
-          final mockResponse = Response(
-            data: movieJson,
-            requestOptions: RequestOptions(
-              baseUrl: 'https://api.themoviedb.org/3/',
-              path: getMovieEndpoint,
-              method: 'GET',
-            ),
-          );
-          when(
-            httpService.get(getMovieEndpoint),
-          ).thenAnswer(
-            (_) async => mockResponse,
-          );
-
-          final result = await repository.getMovie(508947);
-
-          verify(httpService.get(getMovieEndpoint));
-          expect(result.isRight(), true);
-          expect(result.fold(id, id), isA<MovieDetail>());
-        },
-      );
-      test(
-        'should getTrailer',
-        () async {
-          final mockResponse = Response(
-            data: trailerJson,
-            requestOptions: RequestOptions(
-              baseUrl: 'https://api.themoviedb.org/3/',
-              path: getTrailerEndpoint,
-              method: 'GET',
-            ),
-          );
-          when(
-            httpService.get(getTrailerEndpoint),
-          ).thenAnswer(
-            (_) async => mockResponse,
-          );
-
-          final result = await repository.getTrailer(508947);
-
-          verify(httpService.get(getTrailerEndpoint));
-          expect(result.isRight(), true);
-          expect(result.fold(id, id), isA<MovieVideo>());
-        },
-      );
-
-      test(
-        'should searchMovies',
+        'should return a MovieResponseModel on success',
         () async {
           final mockResponse = Response(
             data: searchJson,
-            requestOptions: RequestOptions(
-              baseUrl: 'https://api.themoviedb.org/3/',
-              path: searchMovieEndpoint,
-              method: 'GET',
-            ),
+            requestOptions: requestOptions,
           );
           when(
-            httpService.get(
+            () => httpService.get(
               searchMovieEndpoint,
               queryParameters: {
                 'query': 'avengers',
@@ -126,7 +178,7 @@ void main() {
           final result = await repository.searchMovie('avengers');
 
           verify(
-            httpService.get(
+            () => httpService.get(
               searchMovieEndpoint,
               queryParameters: {'query': 'avengers'},
             ),
@@ -140,14 +192,10 @@ void main() {
         () async {
           final mockResponse = Response(
             data: 'Not found',
-            requestOptions: RequestOptions(
-              baseUrl: 'https://api.themoviedb.org/3/',
-              path: searchMovieEndpoint,
-              method: 'GET',
-            ),
+            requestOptions: requestOptions,
           );
           when(
-            httpService.get(
+            () => httpService.get(
               searchMovieEndpoint,
               queryParameters: {
                 'query': 'avengers',
