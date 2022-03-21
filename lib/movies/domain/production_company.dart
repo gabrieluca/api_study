@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class ProductionCompany {
   final int id;
   final String? logoPath;
@@ -12,9 +10,6 @@ class ProductionCompany {
     required this.originCountry,
     this.logoPath,
   });
-
-  factory ProductionCompany.fromJson(String str) =>
-      ProductionCompany.fromMap(json.decode(str));
 
   factory ProductionCompany.fromMap(Map<String, dynamic> json) =>
       ProductionCompany(
@@ -32,6 +27,4 @@ class ProductionCompany {
       'originCountry': originCountry,
     };
   }
-
-  String toJson() => json.encode(toMap());
 }

@@ -1,18 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
-import '../data/repository.dart';
-import '../domain/failure.dart';
+import '../../global/data/failure.dart';
+import '../../movie/domain/i_movie_repository.dart';
 import '../domain/movie.dart';
 import '../domain/movie_response_model.dart';
 
 class SearchController extends GetxController with StateMixin {
-  SearchController();
+  SearchController(this._repository);
 
-  final _repository = Repository();
+  final IMovieRepository _repository;
 
   MovieResponseModel? movieResponseModel;
-  IFailure? movieError;
+  Failure? movieError;
   final showCancel = false.obs;
 
   List<Movie> get movies => movieResponseModel?.movies ?? <Movie>[];
@@ -34,7 +34,7 @@ class SearchController extends GetxController with StateMixin {
     }
   }
 
-  Future<Either<IFailure, MovieResponseModel>> searchMovie(
+  Future<Either<Failure, MovieResponseModel>> searchMovie(
     String searchTerm,
   ) async {
     change(null, status: RxStatus.loading());

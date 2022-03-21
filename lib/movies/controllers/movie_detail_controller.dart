@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
-import '../data/repository.dart';
-import '../domain/failure.dart';
+import '../../global/data/failure.dart';
+import '../../movie/domain/i_movie_repository.dart';
 import '../domain/movie_detail.dart';
 
 class MovieDetailController extends GetxController with StateMixin {
-  MovieDetailController(this.movieId);
+  MovieDetailController(this._repository, this.movieId);
 
   final int movieId;
-  final _repository = Repository();
+  final IMovieRepository _repository;
 
   final movieDetail = Rxn<MovieDetail>();
 
@@ -23,7 +23,7 @@ class MovieDetailController extends GetxController with StateMixin {
     fetchMovieById(movieId);
   }
 
-  Future<Either<IFailure, MovieDetail>> fetchMovieById(int id) async {
+  Future<Either<Failure, MovieDetail>> fetchMovieById(int id) async {
     final result = await _repository.getMovie(id);
     result.fold(
       (error) => change(null, status: RxStatus.error(error.message)),

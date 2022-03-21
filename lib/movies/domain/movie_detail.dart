@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'movie_genre.dart';
 import 'production_company.dart';
 import 'production_country.dart';
@@ -60,73 +58,84 @@ class MovieDetail {
   final double? voteAverage;
   final int? voteCount;
 
-  factory MovieDetail.fromJson(String str) =>
-      MovieDetail.fromMap(json.decode(str));
+  Map<String, dynamic> toMap() {
+    return {
+      'adult': adult,
+      'backdrop_path': backdropPath,
+      'belongs_to_collection': belongsToCollection,
+      'budget': budget,
+      'genres': genres?.map((x) => x.toMap()).toList(),
+      'homepage': homepage,
+      'id': id,
+      'imdb_id': imdbId,
+      'original_language': originalLanguage,
+      'original_title': originalTitle,
+      'overview': overview,
+      'popularity': popularity,
+      'poster_path': posterPath,
+      'production_companies':
+          productionCompanies?.map((x) => x.toMap()).toList(),
+      'production_countries':
+          productionCountries?.map((x) => x.toMap()).toList(),
+      'release_date': releaseDate?.millisecondsSinceEpoch,
+      'revenue': revenue,
+      'runtime': runtime,
+      'spoken_languages': spokenLanguages?.map((x) => x.toMap()).toList(),
+      'status': status,
+      'tagline': tagline,
+      'title': title,
+      'video': video,
+      'vote_average': voteAverage,
+      'vote_count': voteCount,
+    };
+  }
 
-  factory MovieDetail.fromMap(Map<String, dynamic> json) => MovieDetail(
-        adult: json['adult'],
-        backdropPath: json['backdrop_path'],
-        belongsToCollection: json['belongs_to_collection'],
-        budget: json['budget'],
-        genres: List<MovieGenre>.from(
-          json['genres'].map((x) => MovieGenre.fromMap(x)),
-        ),
-        homepage: json['homepage'],
-        id: json['id'],
-        imdbId: json['imdb_id'],
-        originalLanguage: json['original_language'],
-        originalTitle: json['original_title'],
-        overview: json['overview'],
-        popularity: json['popularity'].toDouble(),
-        posterPath: json['poster_path'],
-        productionCompanies: List<ProductionCompany>.from(
-          (json['production_companies'] as List<dynamic>)
-              .map((x) => ProductionCompany.fromMap(x)),
-        ),
-        productionCountries: List<ProductionCountry>.from(
-          json['production_countries'].map((x) => ProductionCountry.fromMap(x)),
-        ),
-        releaseDate: DateTime.parse(json['release_date']),
-        revenue: json['revenue'],
-        runtime: json['runtime'],
-        spokenLanguages: List<SpokenLanguage>.from(
-          json['spoken_languages'].map((x) => SpokenLanguage.fromMap(x)),
-        ),
-        status: json['status'],
-        tagline: json['tagline'],
-        title: json['title'],
-        video: json['video'],
-        voteAverage: json['vote_average'].toDouble(),
-        voteCount: json['vote_count'],
-      );
+  factory MovieDetail.fromMap(Map<String, dynamic> map) {
+    return MovieDetail(
+      adult: map['adult'],
+      backdropPath: map['backdrop_path'],
+      belongsToCollection: map['belongs_to_collection'],
+      budget: map['budget']?.toInt(),
+      genres: map['genres'] != null
+          ? List<MovieGenre>.from(
+              map['genres']?.map((x) => MovieGenre.fromMap(x)))
+          : null,
+      homepage: map['homepage'],
+      id: map['id']?.toInt(),
+      imdbId: map['imdb_id'],
+      originalLanguage: map['original_language'],
+      originalTitle: map['original_title'],
+      overview: map['overview'],
+      popularity: map['popularity']?.toDouble(),
+      posterPath: map['poster_path'],
+      productionCompanies: map['production_companies'] != null
+          ? List<ProductionCompany>.from(map['production_companies']
+              ?.map((x) => ProductionCompany.fromMap(x)))
+          : null,
+      productionCountries: map['production_countries'] != null
+          ? List<ProductionCountry>.from(map['production_countries']
+              ?.map((x) => ProductionCountry.fromMap(x)))
+          : null,
+      releaseDate: map['release_date'] != null
+          ? DateTime.tryParse(map['release_date'])
+          : null,
+      revenue: map['revenue']?.toInt(),
+      runtime: map['runtime']?.toInt(),
+      spokenLanguages: map['spoken_languages'] != null
+          ? List<SpokenLanguage>.from(
+              map['spoken_languages']?.map((x) => SpokenLanguage.fromMap(x)))
+          : null,
+      status: map['status'],
+      tagline: map['tagline'],
+      title: map['title'],
+      video: map['video'],
+      voteAverage: map['vote_average']?.toDouble(),
+      voteCount: map['vote_count']?.toInt(),
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-        'adult': adult,
-        'backdropPath': backdropPath,
-        'belongsToCollection': belongsToCollection,
-        'budget': budget,
-        'genres': genres?.map((x) => x.toMap()).toList(),
-        'homepage': homepage,
-        'id': id,
-        'imdbId': imdbId,
-        'originalLanguage': originalLanguage,
-        'originalTitle': originalTitle,
-        'overview': overview,
-        'popularity': popularity,
-        'posterPath': posterPath,
-        'productionCompanies':
-            productionCompanies?.map((x) => x.toMap()).toList(),
-        'productionCountries':
-            productionCountries?.map((x) => x.toMap()).toList(),
-        'releaseDate': releaseDate?.millisecondsSinceEpoch,
-        'revenue': revenue,
-        'runtime': runtime,
-        'spokenLanguages': spokenLanguages?.map((x) => x.toMap()).toList(),
-        'status': status,
-        'tagline': tagline,
-        'title': title,
-        'video': video,
-        'voteAverage': voteAverage,
-        'voteCount': voteCount,
-      };
+  @override
+  String toString() {
+    return 'MovieDetail(adult: $adult, backdropPath: $backdropPath, belongsToCollection: $belongsToCollection, budget: $budget, genres: $genres, homepage: $homepage, id: $id, imdbId: $imdbId, originalLanguage: $originalLanguage, originalTitle: $originalTitle, overview: $overview, popularity: $popularity, posterPath: $posterPath, productionCompanies: $productionCompanies, productionCountries: $productionCountries, releaseDate: $releaseDate, revenue: $revenue, runtime: $runtime, spokenLanguages: $spokenLanguages, status: $status, tagline: $tagline, title: $title, video: $video, voteAverage: $voteAverage, voteCount: $voteCount)';
+  }
 }

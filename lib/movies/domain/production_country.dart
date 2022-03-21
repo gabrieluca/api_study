@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class ProductionCountry {
   final String iso31661;
   final String name;
@@ -8,9 +6,6 @@ class ProductionCountry {
     required this.iso31661,
     required this.name,
   });
-
-  factory ProductionCountry.fromJson(String str) =>
-      ProductionCountry.fromMap(json.decode(str));
 
   factory ProductionCountry.fromMap(Map<String, dynamic> json) =>
       ProductionCountry(
@@ -24,6 +19,4 @@ class ProductionCountry {
       'name': name,
     };
   }
-
-  String toJson() => json.encode(toMap());
 }

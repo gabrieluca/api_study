@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../../movie/domain/i_movie_repository.dart';
 import '../../controllers/trailer_controller.dart';
 import '../components/home_app_bar.dart';
 
@@ -14,7 +16,10 @@ class TrailerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _controller = Get.put(
-      TrailerController(movieId),
+      TrailerController(
+        GetIt.I.get<IMovieRepository>(),
+        movieId,
+      ),
       tag: movieId.toString(),
     );
 

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'movie.dart';
 
 class MovieResponseModel {
@@ -14,9 +12,6 @@ class MovieResponseModel {
     required this.totalPages,
     required this.movies,
   });
-
-  factory MovieResponseModel.fromJson(String str) =>
-      MovieResponseModel.fromMap(json.decode(str));
 
   factory MovieResponseModel.fromMap(Map<String, dynamic> json) =>
       MovieResponseModel(

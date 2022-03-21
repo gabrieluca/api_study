@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Movie {
   final double? popularity;
   final int? voteCount;
@@ -32,8 +30,6 @@ class Movie {
     required this.overview,
     required this.releaseDate,
   });
-
-  factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
   factory Movie.fromMap(Map<String, dynamic> json) => Movie(
         popularity: json["popularity"].toDouble(),

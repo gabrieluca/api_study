@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'core/constants.dart';
-import 'core/theme.dart';
-import 'presentation/tabs.dart';
+import 'inject.dart';
+import 'movies/core/constants.dart';
+import 'movies/core/theme.dart';
+import 'movies/presentation/tabs.dart';
 
 void main() {
+  Inject.init();
   runApp(const MyApp());
 }
 

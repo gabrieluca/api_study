@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../../movie/domain/i_movie_repository.dart';
 import '../../controllers/home_controller.dart';
 import '../components/error_warning.dart';
 import '../components/home_app_bar.dart';
@@ -15,7 +17,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = Get.put(HomeController());
+  final _controller = Get.put(
+    HomeController(
+      GetIt.I.get<IMovieRepository>(),
+    ),
+  );
   final _scrollController = ScrollController();
   @override
   void initState() {

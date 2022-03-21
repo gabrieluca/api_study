@@ -1,13 +1,15 @@
+import 'package:api_study/movie/domain/i_movie_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
-import '../data/repository.dart';
-import '../domain/failure.dart';
+import '../../global/data/failure.dart';
 import '../domain/movie.dart';
 import '../domain/movie_response_model.dart';
 
 class HomeController extends GetxController with StateMixin {
-  final _repository = Repository();
+  HomeController(this._repository);
+
+  final IMovieRepository _repository;
 
   final movieResponseModel = Rxn<MovieResponseModel>();
   final lastPage = 1.obs;
@@ -31,7 +33,7 @@ class HomeController extends GetxController with StateMixin {
     getAllMovies(currentPage);
   }
 
-  Future<Either<IFailure, MovieResponseModel>> getAllMovies([
+  Future<Either<Failure, MovieResponseModel>> getAllMovies([
     int page = 1,
   ]) async {
     change(null, status: RxStatus.loading());

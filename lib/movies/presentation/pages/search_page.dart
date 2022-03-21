@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../../movie/domain/i_movie_repository.dart';
 import '../../controllers/search_controller.dart';
 import '../components/error_warning.dart';
 import '../components/home_app_bar.dart';
@@ -16,7 +18,11 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _focusNode = FocusNode();
-  final _controller = Get.put(SearchController());
+  final _controller = Get.put(
+    SearchController(
+      GetIt.I.get<IMovieRepository>(),
+    ),
+  );
 
   @override
   void initState() {

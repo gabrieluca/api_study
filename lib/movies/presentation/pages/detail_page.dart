@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../../movie/domain/i_movie_repository.dart';
 import '../../controllers/movie_detail_controller.dart';
 import '../../core/constants.dart';
 import '../components/chip_date.dart';
@@ -19,7 +21,10 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _controller = Get.put(
-      MovieDetailController(movieId),
+      MovieDetailController(
+        GetIt.I.get<IMovieRepository>(),
+        movieId,
+      ),
       tag: movieId.toString(),
     );
 
